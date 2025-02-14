@@ -1,0 +1,50 @@
+.form {
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.form__button {
+  background-color: #2f71e5;
+  color: white;
+  border: none;
+  padding: 20px 49px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.form__button:hover {
+  background-color: #347eff;
+}
+
+.form__button:active {
+  background-color: #2a65cc;
+}
+
+.form__input {
+  border: none;
+  color: black;
+  caret-color: #2f71e5;
+  font-size: 16px;
+}
+
+.form__input::placeholder {
+  color: #b6bcbf;
+}
+
+@media screen and (max-width: 1104px) {
+  .form__button {
+    padding: 16px 45px;
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .form {
+    background-color: transparent;
+  }
+
+  .form__button {
+    padding: 16px 109px;
+  }
+}

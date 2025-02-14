@@ -1,8 +1,7 @@
 .page {
   max-width: 1440px;
   min-height: 100vh;
-  /* background: #000000; */
-  background: burlywood;
+  background: #000000;
   padding: 0 calc((100vw - 1440px) / 2);
   color: #ffffff;
   font-family: "Roboto", sans-serif;
@@ -11,7 +10,6 @@
 
 .background {
   width: 100%;
-  height: 536px;
   background-image: url("../../images/background.png");
   background-size: cover;
   background-position: center;
