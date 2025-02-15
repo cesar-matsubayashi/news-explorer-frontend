@@ -1,0 +1,33 @@
+.not-found {
+  color: #b6bcbf;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 374px;
+}
+
+.not-found__image {
+  width: 82.5px;
+  height: 82.5px;
+}
+
+.not-found__title {
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: black;
+  margin: 31.5px 0 0 0;
+}
+
+.not-found__description {
+  max-width: 356px;
+  text-align: center;
+  margin: 16px 0 0 0;
+}
+
+@media screen and (max-width: 544px) {
+  .not-found__description {
+    margin: 16px 16px 0 16px;
+  }
+}
