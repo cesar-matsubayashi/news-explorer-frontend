@@ -1,9 +1,18 @@
 import "./../Styles/Form.css";
 import "./SearchForm.css";
+import { SearchContext } from "../../contexts/SearchContext";
+import { useContext } from "react";
 
 export default function SearchForm() {
+  const { handleSearch } = useContext(SearchContext);
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    const form = e.target;
+    const data = new FormData(form);
+
+    handleSearch(data.get("keyword"));
   }
 
   return (
