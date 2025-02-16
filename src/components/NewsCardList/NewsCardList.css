@@ -15,6 +15,12 @@
   margin: 0 0 64px 0;
 }
 
+.news-list__content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
 .news-list__button {
   width: 288px;
   color: #1a1b22;
@@ -22,6 +28,7 @@
   border: none;
   border-radius: 50px;
   padding: 20px 90px;
+  margin-top: 64px;
 }
 
 .news-list__button:hover {

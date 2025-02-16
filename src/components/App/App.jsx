@@ -8,11 +8,13 @@ import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
 import { getLocalArticles, setLocalArticles } from "../../utils/articles";
+import { UserContext } from "../../contexts/UserContext";
 
 function App() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSearch = (keyword) => {
     setIsLoading(true);
@@ -40,15 +42,17 @@ function App() {
     <SearchContext.Provider
       value={{ handleSearch, articles, isLoading, error }}
     >
-      <div className="page">
-        <div className="background">
-          <Header />
-          <Search />
+      <UserContext.Provider value={{ isLoggedIn }}>
+        <div className="page">
+          <div className="background">
+            <Header />
+            <Search />
+          </div>
+          <Main />
+          <About />
+          <Footer />
         </div>
-        <Main />
-        <About />
-        <Footer />
-      </div>
+      </UserContext.Provider>
     </SearchContext.Provider>
   );
 }
