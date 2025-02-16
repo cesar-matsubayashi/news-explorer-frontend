@@ -1,0 +1,29 @@
+.news-list {
+  padding: 80px 104px;
+  color: #1a1b22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.news-list__title {
+  width: 100%;
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 64px 0;
+}
+
+.news-list__button {
+  width: 288px;
+  color: #1a1b22;
+  background-color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 20px 90px;
+}
+
+.news-list__button:hover {
+  background-color: #e8e8e8;
+}

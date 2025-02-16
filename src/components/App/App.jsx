@@ -6,7 +6,8 @@ import Footer from "../Footer/Footer";
 import Search from "../Search/Search";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getLocalArticles, setLocalArticles } from "../../utils/articles";
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -21,6 +22,7 @@ function App() {
         .getNews(keyword)
         .then((response) => {
           setArticles(response.articles);
+          setLocalArticles(response.articles);
         })
         .catch((err) => {
           console.log(err);
@@ -32,7 +34,8 @@ function App() {
     }
   };
 
-  // console.log(articles);
+  const localArticles = getLocalArticles();
+
   return (
     <SearchContext.Provider
       value={{ handleSearch, articles, isLoading, error }}
