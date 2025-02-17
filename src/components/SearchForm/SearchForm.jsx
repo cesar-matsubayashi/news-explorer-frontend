@@ -1,10 +1,14 @@
 import "./../Styles/Form.css";
 import "./SearchForm.css";
 import { SearchContext } from "../../contexts/SearchContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { getKeyword } from "../../utils/news";
 
 export default function SearchForm() {
   const { handleSearch } = useContext(SearchContext);
+  const [inputValue, setInputValue] = useState(getKeyword());
+
+  const handleChange = (e) => setInputValue(e.target.value);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,6 +32,8 @@ export default function SearchForm() {
           e.target.setCustomValidity("Por favor, insira uma palavra-chave")
         }
         onInput={(e) => e.target.setCustomValidity("")}
+        value={inputValue}
+        onChange={handleChange}
       />
       <button type="submit" name="submit" className="form__button">
         Procurar

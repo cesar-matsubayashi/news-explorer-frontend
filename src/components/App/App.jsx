@@ -7,24 +7,36 @@ import Search from "../Search/Search";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
-import { getLocalArticles, setLocalArticles } from "../../utils/articles";
+import { getLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 
 function App() {
-  const [articles, setArticles] = useState([]);
+  const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleSearch = (keyword) => {
+  useEffect(() => {
+    const localNews = JSON.parse(getLocalNews());
+
+    if (!localNews) {
+      return;
+    }
+
+    setNewsList(localNews);
+  }, []);
+
+  const handleSearch = async (keyword) => {
     setIsLoading(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     try {
       newsApi
         .getNews(keyword)
         .then((response) => {
-          setArticles(response.articles);
-          setLocalArticles(response.articles);
+          setNewsList(response.articles);
+          setLocalNews(response.articles, keyword);
         })
         .catch((err) => {
           console.log(err);
@@ -36,11 +48,9 @@ function App() {
     }
   };
 
-  const localArticles = getLocalArticles();
-
   return (
     <SearchContext.Provider
-      value={{ handleSearch, articles, isLoading, error }}
+      value={{ handleSearch, newsList, isLoading, error }}
     >
       <UserContext.Provider value={{ isLoggedIn }}>
         <div className="page">

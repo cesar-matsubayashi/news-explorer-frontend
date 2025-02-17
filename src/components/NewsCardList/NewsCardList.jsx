@@ -1,9 +1,10 @@
-import NewsCard from "../NewsCard/NewsCard";
-import { getLocalArticles, setLocalArticles } from "../../utils/articles";
 import "./NewsCardList.css";
+import NewsCard from "../NewsCard/NewsCard";
+import { SearchContext } from "../../contexts/SearchContext";
+import { useContext } from "react";
 
 export default function NewsCardList() {
-  const newsList = JSON.parse(getLocalArticles());
+  const { newsList } = useContext(SearchContext);
 
   return (
     <div className="news-list">
