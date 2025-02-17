@@ -29,21 +29,35 @@ function App() {
   const handleSearch = async (keyword) => {
     setIsLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
     try {
       newsApi
         .getNews(keyword)
         .then((response) => {
+          if (response.totalResults === 0) {
+            const error = new Error(
+              "Desculpe, mas nada corresponde aos seus termos de pesquisa"
+            );
+            error.title = "Nada encontrado";
+            error.name = "DocumentNotFound";
+            throw error;
+          }
+
           setNewsList(response.articles);
           setLocalNews(response.articles, keyword);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.name != "DocumentNotFound") {
+            err.message =
+              "Desculpe, pode haver um problema de conexão ou o servidor pode estar inativo. Por favor, tente novamente mais tarde.";
+            err.title = "Algo deu errado";
+          }
+
+          setError(err);
         });
     } catch (err) {
-      setError(err.message);
+      setError(err);
     } finally {
+      setError(null);
       setIsLoading(false);
     }
   };
