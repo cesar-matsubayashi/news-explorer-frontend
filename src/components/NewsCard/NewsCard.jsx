@@ -1,5 +1,6 @@
 import "./NewsCard.css";
 import bookmark from "../../images/bookmark.svg";
+import fallback from "../../images/fallback.png";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -63,7 +64,7 @@ export default function NewsCard(props) {
         rel="noopener noreferrer"
       >
         <img
-          src={urlToImage}
+          src={urlToImage || fallback}
           alt="Imagem artigo"
           className="news-card__image"
         />
