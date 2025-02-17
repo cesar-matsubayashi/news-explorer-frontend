@@ -1,22 +1,31 @@
 import "./NewsCardList.css";
 import NewsCard from "../NewsCard/NewsCard";
 import { SearchContext } from "../../contexts/SearchContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function NewsCardList() {
   const { newsList } = useContext(SearchContext);
+  const [visibleNews, setVisibleNews] = useState(3);
+
+  function handleClick() {
+    setVisibleNews((prev) => prev + 3);
+  }
 
   return (
     <div className="news-list">
       <h2 className="news-list__title">Procurar resultados</h2>
 
       <div className="news-list__content">
-        {newsList.map((news) => (
+        {newsList.slice(0, visibleNews).map((news) => (
           <NewsCard key={news.url} news={news} />
         ))}
       </div>
 
-      <button className="news-list__button">Mostrar mais</button>
+      {visibleNews < newsList.length && (
+        <button className="news-list__button" onClick={handleClick}>
+          Mostrar mais
+        </button>
+      )}
     </div>
   );
 }
