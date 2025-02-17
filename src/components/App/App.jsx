@@ -9,6 +9,7 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
 import { getLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
+import background from "../../images/background.png";
 
 function App() {
   const [newsList, setNewsList] = useState([]);
@@ -68,10 +69,9 @@ function App() {
     >
       <UserContext.Provider value={{ isLoggedIn }}>
         <div className="page">
-          <div className="background">
-            <Header />
-            <Search />
-          </div>
+          <img src={background} className="background" />
+          <Header />
+          <Search />
           <Main />
           <About />
           <Footer />

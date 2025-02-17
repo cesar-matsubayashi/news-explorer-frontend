@@ -1,17 +1,38 @@
 .page {
   max-width: 1440px;
   min-height: 100vh;
-  background: white;
   padding: 0 calc((100vw - 1440px) / 2);
   color: #ffffff;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
   font-weight: 400;
+  position: relative;
 }
 
 .background {
-  width: 100%;
-  background-image: url("../../images/background.png");
-  background-size: cover;
-  background-position: center;
+  position: absolute;
+  transform: translate(-50%, 0);
+  top: 0;
+  left: 50%;
+  width: 1440px;
+  height: 580px;
+  object-fit: cover;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1440px) {
+  .background-overlay {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1104px) {
+  .background-overlay {
+    height: 400px;
+  }
+}
+@media screen and (max-width: 544px) {
+  .background-overlay {
+    height: 536px;
+  }
 }
