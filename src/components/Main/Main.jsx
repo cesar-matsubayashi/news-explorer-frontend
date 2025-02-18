@@ -6,7 +6,7 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { useContext } from "react";
 
 export default function Main() {
-  const { newsList, isLoading, error } = useContext(SearchContext);
+  const { isLoading, error } = useContext(SearchContext);
 
   return (
     <main className="news">

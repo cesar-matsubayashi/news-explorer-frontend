@@ -1,21 +1,21 @@
 import "./App.css";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import About from "../About/About";
-import Footer from "../Footer/Footer";
-import Search from "../Search/Search";
+import Layout from "../Layout/Layout";
+import Home from "../Home/Home";
+import SavedNewsPage from "../SavedNewsPage/SavedNewsPage";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
 import { getLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
+import { Route, Routes } from "react-router";
 
 function App() {
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     const localNews = JSON.parse(getLocalNews());
@@ -70,11 +70,19 @@ function App() {
       <UserContext.Provider value={{ isLoggedIn }}>
         <div className="page">
           <img src={background} className="background" />
-          <Header />
-          <Search />
-          <Main />
-          <About />
-          <Footer />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route
+                path="/saved-news"
+                element={
+                  <ProtectedRoute>
+                    <SavedNewsPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
         </div>
       </UserContext.Provider>
     </SearchContext.Provider>
