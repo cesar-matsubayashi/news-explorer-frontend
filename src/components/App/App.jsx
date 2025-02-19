@@ -18,6 +18,8 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  const user = { name: "Cesar", email: "cesar@email.com" };
+
   useEffect(() => {
     const localNews = JSON.parse(getLocalNews());
 
@@ -68,7 +70,7 @@ function App() {
     <SearchContext.Provider
       value={{ handleSearch, newsList, isLoading, error }}
     >
-      <UserContext.Provider value={{ isLoggedIn }}>
+      <UserContext.Provider value={{ isLoggedIn, user }}>
         <div className="page">
           {location.pathname === "/" && (
             <img src={background} className="background" />

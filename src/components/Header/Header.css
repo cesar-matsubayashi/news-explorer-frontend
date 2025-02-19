@@ -13,6 +13,7 @@
 
 .header_saved-news {
   color: black;
+  border-bottom: 1px solid #d1d2d6;
 }
 
 @media screen and (max-width: 1104px) {

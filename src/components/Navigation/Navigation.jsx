@@ -1,10 +1,14 @@
 import "./Navigation.css";
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import menu from "../../images/menu.svg";
 import close from "../../images/close.svg";
+import logoutWhite from "../../images/logout.svg";
+import logoutBlack from "../../images/logout-black.svg";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Navigation() {
+  const { isLoggedIn, user } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -13,6 +17,9 @@ export default function Navigation() {
       ? `${baseClass} ${baseClass}_saved-news`
       : baseClass;
   };
+
+  const logout =
+    location.pathname === "/saved-news" ? logoutBlack : logoutWhite;
 
   const toggleMenu = () => {
     setIsOpen((open) => !open);
@@ -29,18 +36,50 @@ export default function Navigation() {
       </li>
       <li>
         <NavLink
-          className={(isActive) =>
+          className={({ isActive, isPending }) =>
             isActive
               ? `${getClass("navigation__navlink")} navigation__navlink-active`
               : getClass("navigation__navlink")
           }
           to="/"
+          end
         >
           Início
         </NavLink>
       </li>
+      {isLoggedIn && (
+        <li>
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isActive
+                ? `${getClass("navigation__navlink")}  ${getClass(
+                    "navigation__navlink-active"
+                  )} navigation__navlink_saved`
+                : `${getClass("navigation__navlink")} navigation__navlink_saved`
+            }
+            to="/saved-news"
+          >
+            Artigos salvos
+          </NavLink>
+        </li>
+      )}
       <li>
-        <button className="navigation__signin">Entrar</button>
+        {isLoggedIn ? (
+          <button
+            className={`${getClass(
+              "navigation__button"
+            )} navigation__button_logout`}
+          >
+            <>
+              {user.name}{" "}
+              <img className="navigation__logout-icon" src={logout} />
+            </>
+          </button>
+        ) : (
+          <button className="navigation__button navigation__button_signin">
+            Entrar
+          </button>
+        )}
       </li>
     </ul>
   );
