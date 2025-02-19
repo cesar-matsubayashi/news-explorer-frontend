@@ -16,7 +16,7 @@ function App() {
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const user = { name: "Cesar", email: "cesar@email.com" };
 
@@ -67,11 +67,21 @@ function App() {
     }
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <SearchContext.Provider
       value={{ handleSearch, newsList, isLoading, error }}
     >
-      <UserContext.Provider value={{ isLoggedIn, user }}>
+      <UserContext.Provider
+        value={{ isLoggedIn, user, handleLogin, handleLogout }}
+      >
         <div className="page">
           {location.pathname === "/" && (
             <img src={background} className="background" />

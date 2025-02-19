@@ -8,7 +8,8 @@ import logoutBlack from "../../images/logout-black.svg";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function Navigation() {
-  const { isLoggedIn, user } = useContext(UserContext);
+  const { isLoggedIn, user, handleLogin, handleLogout } =
+    useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -24,6 +25,16 @@ export default function Navigation() {
   const toggleMenu = () => {
     setIsOpen((open) => !open);
   };
+
+  function handleClick(e) {
+    e.preventDefault();
+
+    if (isLoggedIn) {
+      handleLogout();
+    } else {
+      handleLogin();
+    }
+  }
 
   return (
     <ul className="navigation">
@@ -69,6 +80,7 @@ export default function Navigation() {
             className={`${getClass(
               "navigation__button"
             )} navigation__button_logout`}
+            onClick={handleClick}
           >
             <>
               {user.name}{" "}
@@ -76,7 +88,10 @@ export default function Navigation() {
             </>
           </button>
         ) : (
-          <button className="navigation__button navigation__button_signin">
+          <button
+            className="navigation__button navigation__button_signin"
+            onClick={handleClick}
+          >
             Entrar
           </button>
         )}
