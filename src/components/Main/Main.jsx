@@ -6,13 +6,17 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { useContext } from "react";
 
 export default function Main() {
-  const { isLoading, error } = useContext(SearchContext);
+  const { isLoading, error, newsList } = useContext(SearchContext);
 
   return (
     <main className="news">
-      {isLoading && <Prealoader />}
-      {!isLoading && error && <SearchError error={error} />}
-      {!isLoading && !error && <NewsCardList />}
+      {isLoading ? (
+        <Prealoader />
+      ) : error ? (
+        <SearchError error={error} />
+      ) : (
+        newsList.length > 0 && <NewsCardList />
+      )}
     </main>
   );
 }

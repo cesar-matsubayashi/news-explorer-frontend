@@ -6,7 +6,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
-import { getLocalNews, setLocalNews } from "../../utils/news";
+import { getLocalNews, removeLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
@@ -55,10 +55,11 @@ function App() {
               "Desculpe, pode haver um problema de conexão ou o servidor pode estar inativo. Por favor, tente novamente mais tarde.";
             err.title = "Algo deu errado";
           }
-
+          removeLocalNews();
           setError(err);
         });
     } catch (err) {
+      removeLocalNews();
       setError(err);
     } finally {
       setError(null);
