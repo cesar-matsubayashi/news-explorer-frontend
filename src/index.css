@@ -2,8 +2,6 @@
 @import url("./vendor/fonts.css");
 
 :root {
-  display: flex;
-  justify-content: center;
   --primary-bg: white;
   --secondary-bg: #f5f6f7;
   --primary-text-color: #1a1b22;
