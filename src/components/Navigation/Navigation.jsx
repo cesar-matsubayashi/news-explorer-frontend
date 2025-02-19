@@ -1,11 +1,18 @@
 import "./Navigation.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import menu from "../../images/menu.svg";
 import close from "../../images/close.svg";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const getClass = (baseClass) => {
+    return location.pathname === "/saved-news"
+      ? `${baseClass} ${baseClass}_saved-news`
+      : baseClass;
+  };
 
   const toggleMenu = () => {
     setIsOpen((open) => !open);
@@ -24,8 +31,8 @@ export default function Navigation() {
         <NavLink
           className={(isActive) =>
             isActive
-              ? "navigation__navlink navigation__navlink-active"
-              : "navigation__navlink"
+              ? `${getClass("navigation__navlink")} navigation__navlink-active`
+              : getClass("navigation__navlink")
           }
           to="/"
         >

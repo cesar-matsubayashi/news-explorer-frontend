@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 import { getLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 
 function App() {
+  const location = useLocation();
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -69,7 +70,9 @@ function App() {
     >
       <UserContext.Provider value={{ isLoggedIn }}>
         <div className="page">
-          <img src={background} className="background" />
+          {location.pathname === "/" && (
+            <img src={background} className="background" />
+          )}
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />

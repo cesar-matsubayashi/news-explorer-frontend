@@ -11,6 +11,10 @@
   padding: 0 104px;
 }
 
+.header_saved-news {
+  color: black;
+}
+
 @media screen and (max-width: 1104px) {
   .header {
     height: 66px;
