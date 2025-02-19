@@ -1,6 +1,6 @@
 .news-list {
   padding: 80px 104px;
-  color: #1a1b22;
+  color: var(--primary-text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,8 +29,8 @@
   font-weight: 500;
   line-height: 24px;
   width: 288px;
-  color: #1a1b22;
-  background-color: white;
+  color: var(--primary-text-color);
+  background-color: var(--primary-bg);
   border: none;
   border-radius: 50px;
   padding: 20px 90px;

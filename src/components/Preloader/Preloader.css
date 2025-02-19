@@ -14,7 +14,7 @@
 }
 
 .preloader-text {
-  color: #b6bcbf;
+  color: var(--secondary-text-color);
   margin: 0;
   position: absolute;
   transform: translate(-50%, -50%);

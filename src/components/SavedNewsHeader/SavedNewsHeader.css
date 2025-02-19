@@ -1,5 +1,5 @@
 .saved-news-header {
-  color: black;
+  color: var(--primary-text-color);
   padding: 40px 0 56px 104px;
   font-family: "Roboto", sans-serif;
   font-size: 18px;

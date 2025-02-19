@@ -1,12 +1,12 @@
 .form {
-  background-color: white;
+  background-color: var(--primary-bg);
   font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
 
 .form__button {
   background-color: #2f71e5;
-  color: white;
+  color: var(--accent-text-color);
   border: none;
   padding: 20px 49px;
   border-radius: 50px;
@@ -24,13 +24,13 @@
 
 .form__input {
   border: none;
-  color: black;
+  color: var(--primary-text-color);
   caret-color: #2f71e5;
   font-size: 16px;
 }
 
 .form__input::placeholder {
-  color: #b6bcbf;
+  color: var(--secondary-text-color);
 }
 
 @media screen and (max-width: 1104px) {

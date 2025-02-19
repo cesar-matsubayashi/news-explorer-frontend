@@ -2,7 +2,7 @@
   font-family: "Roboto Slab", sans-serif;
   font-weight: 700;
   font-size: 20px;
-  color: white;
+  color: var(--accent-text-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .header_saved-news {
-  color: black;
+  color: var(--primary-text-color);
   border-bottom: 1px solid #d1d2d6;
 }
 

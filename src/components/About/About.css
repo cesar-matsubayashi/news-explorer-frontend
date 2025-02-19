@@ -1,6 +1,6 @@
 .about {
-  background-color: white;
-  color: #1a1b22;
+  background-color: var(--primary-bg);
+  color: var(--primary-text-color);
   display: flex;
   padding: 0 104px;
 }

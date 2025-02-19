@@ -1,5 +1,5 @@
 .not-found {
-  color: #b6bcbf;
+  color: var(--secondary-text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +16,7 @@
   font-family: "Roboto Slab", sans-serif;
   font-size: 26px;
   font-weight: 400;
-  color: black;
+  color: var(--primary-text-color);
   margin: 31.5px 0 0 0;
 }
 
