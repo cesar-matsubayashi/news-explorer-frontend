@@ -1,5 +1,6 @@
 import "./NewsCardList.css";
 import NewsCard from "../NewsCard/NewsCard";
+import NewsCardHeader from "../NewsCardHeader/NewsCardHeader";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useContext, useState } from "react";
 
@@ -17,7 +18,9 @@ export default function NewsCardList() {
 
       <div className="news-list__content">
         {newsList.slice(0, visibleNews).map((news) => (
-          <NewsCard key={news.url} news={news} />
+          <NewsCard key={news.url} news={news}>
+            <NewsCardHeader />
+          </NewsCard>
         ))}
       </div>
 

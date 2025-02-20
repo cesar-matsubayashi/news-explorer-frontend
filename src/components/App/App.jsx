@@ -1,7 +1,7 @@
 import "./App.css";
 import Layout from "../Layout/Layout";
 import Home from "../Home/Home";
-import SavedNewsPage from "../SavedNewsPage/SavedNewsPage";
+import SavedNewsPage from "../SavedNews/SavedNews";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
@@ -16,7 +16,7 @@ function App() {
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const user = { name: "Cesar", email: "cesar@email.com" };
 

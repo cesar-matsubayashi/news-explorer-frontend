@@ -1,23 +1,12 @@
 import "./NewsCard.css";
-import bookmark from "../../images/bookmark.svg";
+
 import fallback from "../../images/fallback.png";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function NewsCard(props) {
-  const { urlToImage, publishedAt, title, description, source, url } =
-    props.news;
-
-  const { isLoggedIn } = useContext(UserContext);
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
+  const { news, children } = props;
+  const { urlToImage, publishedAt, title, description, source, url } = news;
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -31,32 +20,7 @@ export default function NewsCard(props) {
 
   return (
     <div className="news-card">
-      <div className="news-card__bookmark-container">
-        <div
-          className={`news-card__signin  ${
-            isHovering
-              ? "news-card__signin_active"
-              : "news-card__signin_inactive"
-          }`}
-        >
-          Faça o login para salvar os artigos
-        </div>
-
-        <div
-          className="news-card__bookmark"
-          onMouseOver={handleMouseOver}
-          onMouseOut={handleMouseOut}
-        >
-          <img
-            src={bookmark}
-            alt="bookmark"
-            className={`news-card__bookmark-icon ${
-              !isLoggedIn && "news-card__bookmark-icon_disable"
-            }`}
-          />
-        </div>
-      </div>
-
+      {children}
       <a
         className="news-card__url"
         href={url}
