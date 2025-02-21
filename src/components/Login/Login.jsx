@@ -36,7 +36,6 @@ export default function Login() {
             placeholder="Insira senha"
             required
           />
-          <span className="password-input-error form__input-error"></span>
         </fieldset>
 
         <button

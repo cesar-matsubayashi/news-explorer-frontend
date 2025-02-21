@@ -49,6 +49,14 @@
   background-color: #2a65cc;
 }
 
+.form__input-error {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: red;
+  margin-top: 3px;
+}
+
 @media screen and (max-width: 1104px) {
   .form__button {
     padding: 16px 45px;
