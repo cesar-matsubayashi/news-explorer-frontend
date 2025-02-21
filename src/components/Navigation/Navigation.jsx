@@ -6,12 +6,17 @@ import close from "../../images/close.svg";
 import logoutWhite from "../../images/logout.svg";
 import logoutBlack from "../../images/logout-black.svg";
 import { UserContext } from "../../contexts/UserContext";
+import { PopupContext } from "../../contexts/PopupContext";
 
 export default function Navigation() {
   const { isLoggedIn, user, handleLogin, handleLogout } =
     useContext(UserContext);
+  const { handleOpenPopup } = useContext(PopupContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+
+  const registerPopup = { title: "Entrar" };
 
   const getClass = (baseClass) => {
     return location.pathname === "/saved-news"
@@ -30,9 +35,10 @@ export default function Navigation() {
     e.preventDefault();
 
     if (isLoggedIn) {
-      handleLogout();
+      // handleLogout();
     } else {
-      handleLogin();
+      // handleLogin();
+      handleOpenPopup(registerPopup);
     }
   }
 

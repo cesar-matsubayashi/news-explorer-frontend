@@ -10,13 +10,15 @@ import { getLocalNews, removeLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
+import { PopupContext } from "../../contexts/PopupContext";
 
 function App() {
   const location = useLocation();
   const [newsList, setNewsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [popup, setPopup] = useState(null);
 
   const user = { name: "Cesar", email: "cesar@email.com" };
 
@@ -75,6 +77,14 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  function handleOpenPopup(popup) {
+    setPopup(popup);
+  }
+
+  function handleClosePopup() {
+    setPopup();
+  }
+
   return (
     <SearchContext.Provider
       value={{ handleSearch, newsList, isLoading, error }}
@@ -82,24 +92,28 @@ function App() {
       <UserContext.Provider
         value={{ isLoggedIn, user, handleLogin, handleLogout }}
       >
-        <div className="page">
-          {location.pathname === "/" && (
-            <img src={background} className="background" />
-          )}
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route
-                path="/saved-news"
-                element={
-                  <ProtectedRoute>
-                    <SavedNewsPage />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Routes>
-        </div>
+        <PopupContext.Provider
+          value={{ handleOpenPopup, handleClosePopup, popup }}
+        >
+          <div className="page">
+            {location.pathname === "/" && (
+              <img src={background} className="background" />
+            )}
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route
+                  path="/saved-news"
+                  element={
+                    <ProtectedRoute>
+                      <SavedNewsPage />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+            </Routes>
+          </div>
+        </PopupContext.Provider>
       </UserContext.Provider>
     </SearchContext.Provider>
   );
