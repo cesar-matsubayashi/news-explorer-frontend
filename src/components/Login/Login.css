@@ -1,0 +1,46 @@
+.form_login {
+  width: 358px;
+}
+
+.form__fieldset_el_email {
+  margin-top: 22px;
+}
+
+.form__input_el_email {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 9px 0 10px 0;
+}
+
+.form__fieldset_el_password {
+  margin-top: 31px;
+}
+
+.form__input_el_password {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 9px 0 10px 0;
+}
+
+.form__button_login {
+  margin-top: 39px;
+  width: 100%;
+}
+
+.form__button_disabled {
+  color: var(--secondary-text-color);
+  background-color: #e6e8eb;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+  margin-top: 16px;
+}
+
+.register__message {
+  margin: 0 0 0 4px;
+  color: #4983e8;
+}

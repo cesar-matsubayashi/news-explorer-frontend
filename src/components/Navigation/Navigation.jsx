@@ -7,6 +7,7 @@ import logoutWhite from "../../images/logout.svg";
 import logoutBlack from "../../images/logout-black.svg";
 import { UserContext } from "../../contexts/UserContext";
 import { PopupContext } from "../../contexts/PopupContext";
+import Login from "../Login/Login";
 
 export default function Navigation() {
   const { isLoggedIn, user, handleLogin, handleLogout } =
@@ -16,7 +17,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const registerPopup = { title: "Entrar" };
+  const registerPopup = { title: "Entrar", children: <Login /> };
 
   const getClass = (baseClass) => {
     return location.pathname === "/saved-news"
