@@ -11,6 +11,7 @@ import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
 import { PopupContext } from "../../contexts/PopupContext";
+import { getToken, removeToken, setToken } from "../../utils/token";
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,9 @@ function App() {
   const user = { name: "Cesar", email: "cesar@email.com" };
 
   useEffect(() => {
+    const jwt = getToken();
+    setIsLoggedIn(jwt);
+
     const localNews = JSON.parse(getLocalNews());
 
     if (!localNews) {
@@ -70,10 +74,12 @@ function App() {
   };
 
   const handleLogin = () => {
+    setToken("pseudo-user-token");
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
+    removeToken();
     setIsLoggedIn(false);
   };
 
