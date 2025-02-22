@@ -2,50 +2,26 @@ import { PopupContext } from "../../contexts/PopupContext";
 import { UserContext } from "../../contexts/UserContext";
 import "../Styles/Form.css";
 import "./Login.css";
-import { useState, useCallback, useContext } from "react";
+import { useContext } from "react";
+import useFormValidation from "../../utils/useFormValidation";
+import Register from "../Register/Register";
 
 export default function Login() {
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false);
-
   const { handleLogin } = useContext(UserContext);
-  const { handleClosePopup } = useContext(PopupContext);
+  const { handleOpenPopup, handleClosePopup } = useContext(PopupContext);
 
-  const handleChange = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    setErrorMessage(target);
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
-  };
-
-  const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
+  const errorMessages = {
+    email: {
+      valueMissing: "E-mail é necessário",
+      typeMismatch: "E-mail inválido",
     },
-    [setValues, setErrors, setIsValid]
-  );
-
-  const setErrorMessage = (input) => {
-    const validityState = input.validity;
-    const name = input.name;
-    let message;
-
-    if (validityState.valueMissing) {
-      message = name === "email" ? "E-mail é necessário" : "Senha é necessária";
-    } else if (validityState.typeMismatch) {
-      message = "E-mail inválido";
-    } else {
-      message = "";
-    }
-
-    input.setCustomValidity(message);
+    password: {
+      valueMissing: "Senha é necessária",
+    },
   };
+
+  const { errors, isValid, handleChange, resetForm } =
+    useFormValidation(errorMessages);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +39,12 @@ export default function Login() {
     handleClosePopup();
   };
 
+  const openRegister = () => {
+    handleClosePopup();
+    const registerPopup = { title: "Inscrever-se", children: <Register /> };
+    handleOpenPopup(registerPopup);
+  };
+
   return (
     <>
       <form className="form form_login" name="login" onSubmit={handleSubmit}>
@@ -74,7 +56,7 @@ export default function Login() {
             type="email"
             name="email"
             id="email-input"
-            className="form__input form__input_el_email"
+            className="form__input form__input_popup form__input_el_email"
             placeholder="Insira e-mail"
             required
             onChange={handleChange}
@@ -94,7 +76,7 @@ export default function Login() {
             type="password"
             name="password"
             id="password-input"
-            className="form__input  form__input_el_password"
+            className="form__input form__input_popup form__input_el_password"
             placeholder="Insira senha"
             required
             onChange={handleChange}
@@ -119,7 +101,10 @@ export default function Login() {
       </form>
 
       <div className="register">
-        ou<p className="register__message">Inscreva-se</p>
+        ou
+        <p className="register__message" onClick={openRegister}>
+          Inscreva-se
+        </p>
       </div>
     </>
   );
