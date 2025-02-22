@@ -41,11 +41,11 @@
   font-weight: 500;
 }
 
-.form__button:hover {
+.form__button:hover:enabled {
   background-color: #347eff;
 }
 
-.form__button:active {
+.form__button:active:enabled {
   background-color: #2a65cc;
 }
 
