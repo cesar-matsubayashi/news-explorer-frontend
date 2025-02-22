@@ -10,8 +10,7 @@ import { PopupContext } from "../../contexts/PopupContext";
 import Login from "../Login/Login";
 
 export default function Navigation() {
-  const { isLoggedIn, user, handleLogin, handleLogout } =
-    useContext(UserContext);
+  const { isLoggedIn, user, handleLogout } = useContext(UserContext);
   const { handleOpenPopup } = useContext(PopupContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -36,9 +35,8 @@ export default function Navigation() {
     e.preventDefault();
 
     if (isLoggedIn) {
-      // handleLogout();
+      handleLogout();
     } else {
-      // handleLogin();
       handleOpenPopup(registerPopup);
     }
   }
