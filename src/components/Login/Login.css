@@ -6,38 +6,13 @@
   margin-top: 22px;
 }
 
-.form__input_el_email {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 9px 0 10px 0;
-}
-
-.form__input_el_email:focus {
-  outline: none;
-  border-bottom: 1px solid black;
-}
-
 .form__fieldset_el_password {
   margin-top: 31px;
-}
-
-.form__input_el_password {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 9px 0 10px 0;
-}
-
-.form__input_el_password:focus {
-  outline: none;
-  border-bottom: 1px solid black;
 }
 
 .form__button_login {
   margin-top: 39px;
   width: 100%;
-}
-
-.form__button_disabled {
-  color: var(--secondary-text-color);
-  background-color: #e6e8eb;
 }
 
 .register {
@@ -53,4 +28,5 @@
 .register__message {
   margin: 0 0 0 4px;
   color: #4983e8;
+  cursor: pointer;
 }
