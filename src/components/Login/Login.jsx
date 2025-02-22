@@ -1,3 +1,4 @@
+import { PopupContext } from "../../contexts/PopupContext";
 import { UserContext } from "../../contexts/UserContext";
 import "../Styles/Form.css";
 import "./Login.css";
@@ -9,6 +10,7 @@ export default function Login() {
   const [isValid, setIsValid] = useState(false);
 
   const { handleLogin } = useContext(UserContext);
+  const { handleClosePopup } = useContext(PopupContext);
 
   const handleChange = (event) => {
     const target = event.target;
@@ -58,6 +60,7 @@ export default function Login() {
     console.log(values);
     resetForm();
     handleLogin(data);
+    handleClosePopup();
   };
 
   return (
