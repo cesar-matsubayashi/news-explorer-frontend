@@ -12,6 +12,7 @@ import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
 import { PopupContext } from "../../contexts/PopupContext";
 import { getToken, removeToken, setToken } from "../../utils/token";
+import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 
 function App() {
   const location = useLocation();
@@ -83,6 +84,15 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const handleRegister = () => {
+    const registrationSuccessful = {
+      title: "Cadastro concluído com sucesso!",
+      children: <RegisterSuccessful />,
+    };
+
+    handleOpenPopup(registrationSuccessful);
+  };
+
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
@@ -96,7 +106,7 @@ function App() {
       value={{ handleSearch, newsList, isLoading, error }}
     >
       <UserContext.Provider
-        value={{ isLoggedIn, user, handleLogin, handleLogout }}
+        value={{ isLoggedIn, user, handleLogin, handleLogout, handleRegister }}
       >
         <PopupContext.Provider
           value={{ handleOpenPopup, handleClosePopup, popup }}

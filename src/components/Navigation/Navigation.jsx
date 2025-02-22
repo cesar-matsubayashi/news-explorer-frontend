@@ -16,7 +16,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const registerPopup = { title: "Entrar", children: <Login /> };
+  const loginPopup = { title: "Entrar", children: <Login /> };
 
   const getClass = (baseClass) => {
     return location.pathname === "/saved-news"
@@ -37,7 +37,7 @@ export default function Navigation() {
     if (isLoggedIn) {
       handleLogout();
     } else {
-      handleOpenPopup(registerPopup);
+      handleOpenPopup(loginPopup);
     }
   }
 
