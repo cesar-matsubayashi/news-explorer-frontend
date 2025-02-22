@@ -1,16 +1,70 @@
+import { UserContext } from "../../contexts/UserContext";
 import "../Styles/Form.css";
 import "./Login.css";
+import { useState, useCallback, useContext } from "react";
 
 export default function Login() {
+  const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
+  const [isValid, setIsValid] = useState(false);
+
+  const { handleLogin } = useContext(UserContext);
+
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setErrorMessage(target);
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
+  };
+
+  const resetForm = useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+    },
+    [setValues, setErrors, setIsValid]
+  );
+
+  const setErrorMessage = (input) => {
+    const validityState = input.validity;
+    const name = input.name;
+    let message;
+
+    if (validityState.valueMissing) {
+      message = name === "email" ? "E-mail é necessário" : "Senha é necessária";
+    } else if (validityState.typeMismatch) {
+      message = "E-mail inválido";
+    } else {
+      message = "";
+    }
+
+    input.setCustomValidity(message);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const data = new FormData(form);
+
+    let values = "";
+    for (const [key, value] of data) {
+      values += `${key}: ${value}\n`;
+    }
+    console.log(values);
+    resetForm();
+    handleLogin(data);
   };
 
   return (
     <>
       <form className="form form_login" name="login" onSubmit={handleSubmit}>
         <fieldset className="form__fieldset form__fieldset_el_email">
-          <label for="email-input" className="form__label">
+          <label htmlFor="email-input" className="form__label">
             E-mail
           </label>
           <input
@@ -20,12 +74,17 @@ export default function Login() {
             className="form__input form__input_el_email"
             placeholder="Insira e-mail"
             required
+            onChange={handleChange}
           />
-          <span className="email-input-error form__input-error"></span>
+          {errors.email && (
+            <span className="email-input-error form__input-error">
+              {errors.email}
+            </span>
+          )}
         </fieldset>
 
         <fieldset className="form__fieldset form__fieldset_el_password">
-          <label for="password-input" className="form__label">
+          <label htmlFor="password-input" className="form__label">
             Senha
           </label>
           <input
@@ -35,14 +94,22 @@ export default function Login() {
             className="form__input  form__input_el_password"
             placeholder="Insira senha"
             required
+            onChange={handleChange}
           />
+          {errors.password && (
+            <span className="password-input-error form__input-error">
+              {errors.password}
+            </span>
+          )}
         </fieldset>
 
         <button
           type="submit"
           name="submit"
-          className="form__button form__button_login form__button_disabled"
-          disabled="true"
+          className={`form__button form__button_login ${
+            !isValid ? "form__button_disabled" : ""
+          }`}
+          disabled={!isValid}
         >
           Entrar
         </button>
