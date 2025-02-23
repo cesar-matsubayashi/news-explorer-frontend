@@ -5,7 +5,7 @@ import SavedNewsPage from "../SavedNews/SavedNews";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   getBookmarkedNews,
   getLocalNews,
@@ -29,6 +29,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popup, setPopup] = useState(null);
+  const popupRef = useRef();
 
   const user = { name: "Cesar", email: "cesar@email.com" };
 
@@ -149,7 +150,7 @@ function App() {
         value={{ isLoggedIn, user, handleLogin, handleLogout, handleRegister }}
       >
         <PopupContext.Provider
-          value={{ handleOpenPopup, handleClosePopup, popup }}
+          value={{ handleOpenPopup, handleClosePopup, popup, popupRef }}
         >
           <div className="page">
             {location.pathname === "/" && (
