@@ -51,3 +51,21 @@
 .popup_is-opened {
   display: flex;
 }
+
+@media screen and (max-width: 544px) {
+  .popup__close {
+    top: -41px;
+    right: 16px;
+  }
+
+  .popup__content {
+    transform: translate(-50%, 0);
+    top: 56px;
+    padding: 16px;
+    height: 100%;
+  }
+
+  .popup__title {
+    width: calc(100vw - 32px);
+  }
+}

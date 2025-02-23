@@ -53,7 +53,11 @@ export default function Register() {
 
   return (
     <>
-      <form className="form form_login" name="login" onSubmit={handleSubmit}>
+      <form
+        className="form form_register"
+        name="register"
+        onSubmit={handleSubmit}
+      >
         <fieldset className="form__fieldset form__fieldset_el_email">
           <label htmlFor="email-input" className="form__label">
             E-mail

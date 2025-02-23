@@ -1,4 +1,4 @@
-.form_login {
+.form_register {
   width: 358px;
   position: relative;
 }
@@ -18,8 +18,14 @@
 .register-input-error {
   margin-top: 17px;
   position: absolute;
-  transform: translate(50%, 0);
-  right: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  display: none;
+}
+
+.register-input-error-active {
+  display: flex;
 }
 
 .form__button_register {
@@ -41,4 +47,14 @@
   margin: 0 0 0 4px;
   color: #4983e8;
   cursor: pointer;
+}
+
+@media screen and (max-width: 544px) {
+  .form_register {
+    width: calc(100vw - 32px);
+  }
+
+  .form__button_register {
+    padding: 20px;
+  }
 }

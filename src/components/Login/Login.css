@@ -30,3 +30,13 @@
   color: #4983e8;
   cursor: pointer;
 }
+
+@media screen and (max-width: 544px) {
+  .form_login {
+    width: calc(100vw - 32px);
+  }
+
+  .form__button_login {
+    padding: 20px;
+  }
+}
