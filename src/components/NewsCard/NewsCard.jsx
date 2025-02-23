@@ -1,12 +1,14 @@
 import "./NewsCard.css";
 
 import fallback from "../../images/fallback.png";
-import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { useContext } from "react";
+import { SearchContext } from "../../contexts/SearchContext";
+import { getKeyword } from "../../utils/news";
 
 export default function NewsCard(props) {
   const { news, children } = props;
   const { urlToImage, publishedAt, title, description, source, url } = news;
+  const { handleBookmark } = useContext(SearchContext);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -18,8 +20,14 @@ export default function NewsCard(props) {
     return formatter.format(date);
   };
 
+  const handleSave = (e) => {
+    if (e.target.className.includes("bookmark")) {
+      handleBookmark({ ...news, keyword: getKeyword() });
+    }
+  };
+
   return (
-    <div className="news-card">
+    <div className="news-card" onClick={handleSave}>
       {children}
       <a
         className="news-card__url"

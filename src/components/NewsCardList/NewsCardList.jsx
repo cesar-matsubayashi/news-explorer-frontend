@@ -5,12 +5,18 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { useContext, useState } from "react";
 
 export default function NewsCardList() {
-  const { newsList } = useContext(SearchContext);
+  const { newsList, bookmarkedList } = useContext(SearchContext);
   const [visibleNews, setVisibleNews] = useState(3);
 
   function handleClick() {
     setVisibleNews((prev) => prev + 3);
   }
+
+  const isSaved = (url) => {
+    return bookmarkedList.some((bookmarked) => {
+      return bookmarked.url === url;
+    });
+  };
 
   return (
     <div className="news-list">
@@ -19,7 +25,7 @@ export default function NewsCardList() {
       <div className="news-list__content">
         {newsList.slice(0, visibleNews).map((news) => (
           <NewsCard key={news.url} news={news}>
-            <NewsCardHeader />
+            <NewsCardHeader isSaved={isSaved(news.url)} />
           </NewsCard>
         ))}
       </div>

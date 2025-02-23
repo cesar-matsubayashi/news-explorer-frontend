@@ -6,7 +6,14 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState } from "react";
-import { getLocalNews, removeLocalNews, setLocalNews } from "../../utils/news";
+import {
+  getBookmarkedNews,
+  getLocalNews,
+  removeBookmarkedNews,
+  removeLocalNews,
+  setBookmarkedNews,
+  setLocalNews,
+} from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
@@ -17,6 +24,7 @@ import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 function App() {
   const location = useLocation();
   const [newsList, setNewsList] = useState([]);
+  const [bookmarkedList, setBookmarkedList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,6 +35,14 @@ function App() {
   useEffect(() => {
     const jwt = getToken();
     setIsLoggedIn(jwt);
+
+    if (jwt) {
+      const bookmark = JSON.parse(getBookmarkedNews());
+
+      if (bookmark) {
+        setBookmarkedList(bookmark);
+      }
+    }
 
     const localNews = JSON.parse(getLocalNews());
 
@@ -77,6 +93,11 @@ function App() {
   const handleLogin = () => {
     setToken("pseudo-user-token");
     setIsLoggedIn(true);
+    const bookmark = JSON.parse(getBookmarkedNews());
+
+    if (bookmark) {
+      setBookmarkedList(bookmark);
+    }
   };
 
   const handleLogout = () => {
@@ -101,9 +122,28 @@ function App() {
     setPopup();
   }
 
+  const handleBookmark = (news) => {
+    const isBookmarked = bookmarkedList.some(
+      (bookmarked) => bookmarked.url === news.url
+    );
+
+    if (isBookmarked) {
+      removeBookmarkedNews(bookmarkedList, news);
+    } else {
+      setBookmarkedNews(bookmarkedList, news);
+    }
+  };
+
   return (
     <SearchContext.Provider
-      value={{ handleSearch, newsList, isLoading, error }}
+      value={{
+        handleSearch,
+        newsList,
+        isLoading,
+        error,
+        handleBookmark,
+        bookmarkedList,
+      }}
     >
       <UserContext.Provider
         value={{ isLoggedIn, user, handleLogin, handleLogout, handleRegister }}
