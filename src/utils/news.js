@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { SearchContext } from "../contexts/SearchContext";
-
 const NEWS_KEY = "news";
 const KEYWORD_KEY = "keyword";
 

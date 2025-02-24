@@ -1,7 +1,7 @@
 import "./../Styles/Form.css";
 import "./SearchForm.css";
 import { SearchContext } from "../../contexts/SearchContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { getKeyword } from "../../utils/news";
 
 export default function SearchForm() {

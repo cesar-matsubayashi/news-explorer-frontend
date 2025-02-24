@@ -36,7 +36,7 @@ export default function Navigation({ isMobile }) {
     }
   }
 
-  const checkSavedNewsActive = ({ isActive, isPending }) => {
+  const checkSavedNewsActive = ({ isActive }) => {
     return isActive
       ? `${getClass("navigation__navlink")} ${getClass(
           "navigation__navlink-active"
@@ -44,7 +44,7 @@ export default function Navigation({ isMobile }) {
       : `${getClass("navigation__navlink")} navigation__navlink_saved`;
   };
 
-  const checkHomeActive = ({ isActive, isPending }) => {
+  const checkHomeActive = ({ isActive }) => {
     return isActive
       ? `${getClass("navigation__navlink")} navigation__navlink-active`
       : getClass("navigation__navlink");
