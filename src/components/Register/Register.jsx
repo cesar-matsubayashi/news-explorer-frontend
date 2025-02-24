@@ -39,7 +39,7 @@ export default function Register() {
     for (const [key, value] of data) {
       values += `${key}: ${value}\n`;
     }
-    console.log(values);
+
     resetForm();
     handleClosePopup();
     handleRegister(data);

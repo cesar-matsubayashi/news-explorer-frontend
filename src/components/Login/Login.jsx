@@ -33,7 +33,7 @@ export default function Login() {
     for (const [key, value] of data) {
       values += `${key}: ${value}\n`;
     }
-    console.log(values);
+
     resetForm();
     handleLogin(data);
     handleClosePopup();
