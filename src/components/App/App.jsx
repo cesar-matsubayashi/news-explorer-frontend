@@ -20,6 +20,7 @@ import { Route, Routes, useLocation } from "react-router";
 import { PopupContext } from "../../contexts/PopupContext";
 import { getToken, removeToken, setToken } from "../../utils/token";
 import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
+import Popup from "../Popup/Popup";
 
 function App() {
   const location = useLocation();
@@ -169,6 +170,15 @@ function App() {
                 />
               </Route>
             </Routes>
+            {popup && (
+              <Popup
+                onClose={handleClosePopup}
+                title={popup.title}
+                isNavigation={popup.isNavigation}
+              >
+                {popup.children}
+              </Popup>
+            )}
           </div>
         </PopupContext.Provider>
       </UserContext.Provider>

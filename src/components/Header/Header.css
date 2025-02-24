@@ -11,6 +11,10 @@
   padding: 0 104px;
 }
 
+.header__menu-button {
+  display: none;
+}
+
 .header_saved-news {
   color: var(--primary-text-color);
   border-bottom: 1px solid #d1d2d6;
@@ -28,5 +32,19 @@
     height: 56px;
     font-size: 16px;
     padding: 0 16px;
+  }
+
+  .header__border {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.1);
+    width: 100%;
+  }
+
+  .header__menu-button {
+    display: block;
+    width: 24px;
+    height: 24px;
   }
 }

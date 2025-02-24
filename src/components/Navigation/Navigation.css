@@ -10,7 +10,7 @@
   line-height: 24px;
 }
 
-.menu__button {
+.popup_navigation {
   display: none;
 }
 
@@ -44,7 +44,6 @@
 
 .navigation__navlink_saved {
   padding: 30px 31px 0 31px;
-  margin-left: 34px;
 }
 
 .navigation__button {
@@ -92,9 +91,13 @@
     bottom: -20px;
   }
 
+  .navigation__navlink_saved {
+    padding: 22px 20px 0 20px;
+  }
+
   .navigation__button {
     height: 40px;
-    margin: 14px 0 0 16px;
+    margin: 14px 0 0 10px;
   }
 
   .navigation__signin {
@@ -109,25 +112,35 @@
 @media screen and (max-width: 544px) {
   .navigation {
     font-size: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--accent-text-color);
+    margin-top: 13px;
   }
 
   .navigation__navlink {
-    padding-top: 22px;
-    display: none;
+    padding: 0;
+    margin-top: 15px;
+    line-height: 56px;
+    font-size: 18px;
+    color: var(--accent-text-color);
   }
 
   .navigation__navlink-active::after {
-    bottom: -20px;
-  }
-
-  .navigation__button {
     display: none;
   }
 
-  .menu__button {
-    display: block;
-    width: 24px;
-    height: 24px;
-    margin-top: 16px;
+  .navigation_li {
+    width: 100%;
+  }
+
+  .navigation__button {
+    margin: 22px 0 0 0;
+    width: 100%;
+    height: fit-content;
+    line-height: 56px;
+    font-size: 18px;
+    color: var(--accent-text-color);
+    border-color: var(--accent-text-color);
   }
 }

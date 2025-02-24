@@ -1,19 +1,16 @@
 import "./Navigation.css";
 import { NavLink, useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
-import menu from "../../images/menu.svg";
-import close from "../../images/close.svg";
+import { useContext } from "react";
 import logoutWhite from "../../images/logout.svg";
 import logoutBlack from "../../images/logout-black.svg";
 import { UserContext } from "../../contexts/UserContext";
 import { PopupContext } from "../../contexts/PopupContext";
 import Login from "../Login/Login";
 
-export default function Navigation() {
+export default function Navigation({ isMobile }) {
   const { isLoggedIn, user, handleLogout } = useContext(UserContext);
   const { handleOpenPopup } = useContext(PopupContext);
 
-  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const loginPopup = { title: "Entrar", children: <Login /> };
@@ -25,11 +22,9 @@ export default function Navigation() {
   };
 
   const logout =
-    location.pathname === "/saved-news" ? logoutBlack : logoutWhite;
-
-  const toggleMenu = () => {
-    setIsOpen((open) => !open);
-  };
+    location.pathname === "/saved-news" && !isMobile
+      ? logoutBlack
+      : logoutWhite;
 
   function handleClick(e) {
     e.preventDefault();
@@ -41,45 +36,35 @@ export default function Navigation() {
     }
   }
 
+  const checkSavedNewsActive = ({ isActive, isPending }) => {
+    return isActive
+      ? `${getClass("navigation__navlink")} ${getClass(
+          "navigation__navlink-active"
+        )} navigation__navlink_saved`
+      : `${getClass("navigation__navlink")} navigation__navlink_saved`;
+  };
+
+  const checkHomeActive = ({ isActive, isPending }) => {
+    return isActive
+      ? `${getClass("navigation__navlink")} navigation__navlink-active`
+      : getClass("navigation__navlink");
+  };
+
   return (
     <ul className="navigation">
       <li>
-        <img
-          className="menu__button"
-          src={isOpen ? close : menu}
-          onClick={toggleMenu}
-        />
-      </li>
-      <li>
-        <NavLink
-          className={({ isActive, isPending }) =>
-            isActive
-              ? `${getClass("navigation__navlink")} navigation__navlink-active`
-              : getClass("navigation__navlink")
-          }
-          to="/"
-          end
-        >
+        <NavLink className={checkHomeActive} to="/" end>
           Início
         </NavLink>
       </li>
       {isLoggedIn && (
         <li>
-          <NavLink
-            className={({ isActive, isPending }) =>
-              isActive
-                ? `${getClass("navigation__navlink")}  ${getClass(
-                    "navigation__navlink-active"
-                  )} navigation__navlink_saved`
-                : `${getClass("navigation__navlink")} navigation__navlink_saved`
-            }
-            to="/saved-news"
-          >
+          <NavLink className={checkSavedNewsActive} to="/saved-news">
             Artigos salvos
           </NavLink>
         </li>
       )}
-      <li>
+      <li className="navigation_li">
         {isLoggedIn ? (
           <button
             className={`${getClass(
