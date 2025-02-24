@@ -11,6 +11,15 @@
   padding: 0 104px;
 }
 
+.header__logo {
+  text-decoration: none;
+  color: var(--accent-text-color);
+}
+
+.header__logo_saved-news {
+  color: var(--primary-text-color);
+}
+
 .header__menu-button {
   display: none;
 }

@@ -20,10 +20,24 @@ export default function Footer() {
         </ul>
         <ul className="footer__social-media">
           <li>
-            <img src={github} alt="GitHub" className="footer__github" />
+            <Link
+              to="https://github.com/cesar-matsubayashi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__link"
+            >
+              <img src={github} alt="GitHub" className="footer__github" />
+            </Link>
           </li>
           <li>
-            <img src={linkedin} alt="LinkedIn" className="footer__linkedin" />
+            <Link
+              to="https://www.linkedin.com/in/cesar-matsubayashi-587998b5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__link"
+            >
+              <img src={linkedin} alt="LinkedIn" className="footer__linkedin" />
+            </Link>
           </li>
         </ul>
       </div>

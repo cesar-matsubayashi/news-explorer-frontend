@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useContext, useState } from "react";
 import menuWhite from "../../images/menu.svg";
 import menuBlack from "../../images/menu-black.svg";
@@ -20,6 +20,7 @@ export default function Header() {
   }, []);
 
   let headerClassName;
+  let logoClassName;
   let menu;
 
   const navigation = {
@@ -35,9 +36,11 @@ export default function Header() {
 
   if (location.pathname === "/saved-news") {
     headerClassName = "header header_saved-news";
+    logoClassName = "header__logo header__logo_saved-news";
     menu = menuBlack;
   } else {
     headerClassName = "header";
+    logoClassName = "header__logo";
     menu = menuWhite;
   }
 
@@ -47,7 +50,9 @@ export default function Header() {
 
   return (
     <header className={headerClassName}>
-      NewsExplorer
+      <Link to="/" className={logoClassName}>
+        NewsExplorer
+      </Link>
       {isMobile ? (
         <img className="header__menu-button" src={menu} onClick={openMenu} />
       ) : (
