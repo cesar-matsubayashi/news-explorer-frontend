@@ -31,7 +31,7 @@ class NewsAPI {
 
     const endpoint = `/everything?q=${keyword}&from=${
       lastWeek.toISOString().split("T")[0]
-    }&to=${today.toISOString().split("T")[0]}&sortBy=popularity&pageSize=20`;
+    }&to=${today.toISOString().split("T")[0]}&sortBy=popularity&pageSize=100`;
 
     return this._makeRequest(endpoint);
   }
