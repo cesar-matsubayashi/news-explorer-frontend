@@ -10,8 +10,8 @@
 .form__input_el_keyword {
   width: 100%;
   height: 62px;
+  margin: 1px 0 1px 24px;
   border-radius: 50px;
-  margin-left: 24px;
 }
 
 .form__input_el_keyword:focus {
