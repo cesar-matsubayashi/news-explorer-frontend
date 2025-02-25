@@ -1,0 +1,38 @@
+.preloader-container {
+  height: 282px;
+  position: relative;
+}
+
+.prealoder {
+  width: 74px;
+  height: 74px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 117px;
+  left: 50%;
+  animation: spin 2s linear infinite;
+}
+
+.preloader-text {
+  color: var(--secondary-text-color);
+  margin: 0;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 190px;
+  left: 50%;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 544px) {
+  .preloader-text {
+    font-size: 16px;
+  }
+}

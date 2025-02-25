@@ -1,0 +1,60 @@
+.form_register {
+  width: 358px;
+  position: relative;
+}
+
+.form__fieldset_el_email {
+  margin-top: 22px;
+}
+
+.form__fieldset_el_password {
+  margin-top: 31px;
+}
+
+.form__fieldset_el_name {
+  margin-top: 31px;
+}
+
+.register-input-error {
+  margin-top: 17px;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  display: none;
+}
+
+.register-input-error-active {
+  display: flex;
+}
+
+.form__button_register {
+  margin-top: 39px;
+  width: 100%;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+  margin-top: 16px;
+}
+
+.login__message {
+  margin: 0 0 0 4px;
+  color: #4983e8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 544px) {
+  .form_register {
+    width: calc(100vw - 32px);
+  }
+
+  .form__button_register {
+    padding: 20px;
+  }
+}
