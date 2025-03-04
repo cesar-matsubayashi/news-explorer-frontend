@@ -19,8 +19,11 @@ import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
 import { PopupContext } from "../../contexts/PopupContext";
 import { getToken, removeToken, setToken } from "../../utils/token";
+import Register from "../Register/Register";
 import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 import Popup from "../Popup/Popup";
+import api from "../../utils/mainApi";
+import Login from "../Login/Login";
 
 function App() {
   const location = useLocation();
@@ -39,6 +42,8 @@ function App() {
     setIsLoggedIn(jwt);
 
     if (jwt) {
+      api.setAuth(jwt);
+
       const bookmark = JSON.parse(getBookmarkedNews());
 
       if (bookmark) {
@@ -92,14 +97,30 @@ function App() {
     }
   };
 
-  const handleLogin = () => {
-    setToken("pseudo-user-token");
-    setIsLoggedIn(true);
-    const bookmark = JSON.parse(getBookmarkedNews());
+  const handleLogin = (data) => {
+    api
+      .login(data)
+      .then((response) => {
+        const token = response.token;
 
-    if (bookmark) {
-      setBookmarkedList(bookmark);
-    }
+        setToken(token);
+        api.setAuth(token);
+        setIsLoggedIn(true);
+        handleClosePopup();
+
+        const bookmark = JSON.parse(getBookmarkedNews());
+
+        if (bookmark) {
+          setBookmarkedList(bookmark);
+        }
+      })
+      .catch((error) => {
+        const loginPopup = {
+          title: "Entrar",
+          children: <Login errorMessage={error} />,
+        };
+        handleOpenPopup(loginPopup);
+      });
   };
 
   const handleLogout = () => {
@@ -107,13 +128,24 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  const handleRegister = () => {
-    const registrationSuccessful = {
-      title: "Cadastro concluído com sucesso!",
-      children: <RegisterSuccessful />,
-    };
+  const handleRegister = (data) => {
+    api
+      .register(data)
+      .then(() => {
+        const registrationSuccessful = {
+          title: "Cadastro concluído com sucesso!",
+          children: <RegisterSuccessful />,
+        };
 
-    handleOpenPopup(registrationSuccessful);
+        handleOpenPopup(registrationSuccessful);
+      })
+      .catch((error) => {
+        const registerPopup = {
+          title: "Inscrever-se",
+          children: <Register errorMessage={error} />,
+        };
+        handleOpenPopup(registerPopup);
+      });
   };
 
   function handleOpenPopup(popup) {
@@ -148,7 +180,13 @@ function App() {
       }}
     >
       <UserContext.Provider
-        value={{ isLoggedIn, user, handleLogin, handleLogout, handleRegister }}
+        value={{
+          isLoggedIn,
+          handleLogin,
+          handleLogout,
+          handleRegister,
+          user,
+        }}
       >
         <PopupContext.Provider
           value={{ handleOpenPopup, handleClosePopup, popup, popupRef }}
