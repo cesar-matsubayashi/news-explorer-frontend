@@ -22,7 +22,10 @@ export default function NewsCard(props) {
 
   const handleSave = (e) => {
     if (e.target.className.includes("bookmark")) {
-      handleBookmark({ ...news, keyword: getKeyword() });
+      // console.log({ ...news, keyword: getKeyword() });
+      const copy = { ...news };
+      copy.source = source.name;
+      handleBookmark({ ...copy, keyword: getKeyword() });
     }
   };
 

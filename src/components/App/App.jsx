@@ -7,7 +7,6 @@ import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState, useRef } from "react";
 import {
-  getBookmarkedNews,
   getLocalNews,
   removeBookmarkedNews,
   removeLocalNews,
@@ -41,13 +40,8 @@ function App() {
     setIsLoggedIn(jwt);
 
     if (jwt) {
-      api.setAuth(jwt);
-
-      const bookmark = JSON.parse(getBookmarkedNews());
-
-      if (bookmark) {
-        setBookmarkedList(bookmark);
-      }
+      setAuthenticatedUser(jwt);
+      getBookmarked();
     }
 
     const localNews = JSON.parse(getLocalNews());
@@ -96,27 +90,25 @@ function App() {
     }
   };
 
+  const setAuthenticatedUser = (token) => {
+    api.setAuth(token);
+    setToken(token);
+    setIsLoggedIn(true);
+
+    api.getUser().then((response) => {
+      setUser(response);
+    });
+  };
+
   const handleLogin = (data) => {
     api
       .login(data)
       .then((response) => {
         const token = response.token;
+        setAuthenticatedUser(token);
 
-        api.setAuth(token);
-        setToken(token);
-        setIsLoggedIn(true);
-
-        api.getUser().then((response) => {
-          setUser(response);
-        });
-
+        getBookmarked();
         handleClosePopup();
-
-        const bookmark = JSON.parse(getBookmarkedNews());
-
-        if (bookmark) {
-          setBookmarkedList(bookmark);
-        }
       })
       .catch((error) => {
         let message;
@@ -131,6 +123,17 @@ function App() {
           children: <Login errorMessage={message} />,
         };
         handleOpenPopup(loginPopup);
+      });
+  };
+
+  const getBookmarked = () => {
+    api
+      .getArticles()
+      .then((response) => {
+        setBookmarkedList(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -175,7 +178,9 @@ function App() {
     if (isBookmarked) {
       removeBookmarkedNews(bookmarkedList, news);
     } else {
-      setBookmarkedNews(bookmarkedList, news);
+      api.bookmarkArticles(JSON.stringify(news)).then((response) => {
+        // should change bookmark icon here
+      });
     }
   };
 
@@ -188,6 +193,7 @@ function App() {
         error,
         handleBookmark,
         bookmarkedList,
+        getBookmarked,
       }}
     >
       <UserContext.Provider
