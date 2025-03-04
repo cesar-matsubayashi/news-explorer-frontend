@@ -33,9 +33,8 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popup, setPopup] = useState(null);
+  const [user, setUser] = useState({});
   const popupRef = useRef();
-
-  const user = { name: "Cesar", email: "cesar@email.com" };
 
   useEffect(() => {
     const jwt = getToken();
@@ -103,9 +102,14 @@ function App() {
       .then((response) => {
         const token = response.token;
 
-        setToken(token);
         api.setAuth(token);
+        setToken(token);
         setIsLoggedIn(true);
+
+        api.getUser().then((response) => {
+          setUser(response);
+        });
+
         handleClosePopup();
 
         const bookmark = JSON.parse(getBookmarkedNews());
@@ -115,9 +119,16 @@ function App() {
         }
       })
       .catch((error) => {
+        let message;
+
+        message =
+          error.message === "Failed to fetch"
+            ? { message: "Houve um erro inesperado" }
+            : error;
+
         const loginPopup = {
           title: "Entrar",
-          children: <Login errorMessage={error} />,
+          children: <Login errorMessage={message} />,
         };
         handleOpenPopup(loginPopup);
       });

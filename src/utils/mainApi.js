@@ -35,6 +35,10 @@ class API {
   login(data) {
     return this._makeRequest("/signin", "POST", data);
   }
+
+  getUser() {
+    return this._makeRequest("/users/me");
+  }
 }
 
 const API_URL = import.meta.env.VITE_MAIN_API_URL;
