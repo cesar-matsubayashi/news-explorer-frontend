@@ -61,6 +61,11 @@ class API {
     this._setContentType("application/json");
     return this._makeRequest("/articles", "POST", data);
   }
+
+  removeArticles(id) {
+    this._setContentType("application/json");
+    return this._makeRequest(`/articles/${id}`, "DELETE");
+  }
 }
 
 const API_URL = import.meta.env.VITE_MAIN_API_URL;

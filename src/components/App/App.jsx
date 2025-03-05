@@ -10,7 +10,6 @@ import {
   getLocalNews,
   removeBookmarkedNews,
   removeLocalNews,
-  setBookmarkedNews,
   setLocalNews,
 } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
@@ -52,6 +51,10 @@ function App() {
 
     setNewsList(localNews);
   }, []);
+
+  useEffect(() => {
+    console.log(bookmarkedList);
+  }, [bookmarkedList]);
 
   const handleSearch = async (keyword) => {
     setIsLoading(true);
@@ -126,17 +129,6 @@ function App() {
       });
   };
 
-  const getBookmarked = () => {
-    api
-      .getArticles()
-      .then((response) => {
-        setBookmarkedList(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const handleLogout = () => {
     removeToken();
     setIsLoggedIn(false);
@@ -179,9 +171,28 @@ function App() {
       removeBookmarkedNews(bookmarkedList, news);
     } else {
       api.bookmarkArticles(JSON.stringify(news)).then((response) => {
-        // should change bookmark icon here
+        setBookmarkedList([...bookmarkedList, response]);
       });
     }
+  };
+
+  const getBookmarked = () => {
+    api
+      .getArticles()
+      .then((response) => {
+        setBookmarkedList(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleRemove = (news) => {
+    api.removeArticles(news._id).then(() => {
+      setBookmarkedList((newsList) =>
+        newsList.filter((currentNews) => currentNews._id !== news._id)
+      );
+    });
   };
 
   return (
@@ -193,7 +204,7 @@ function App() {
         error,
         handleBookmark,
         bookmarkedList,
-        getBookmarked,
+        handleRemove,
       }}
     >
       <UserContext.Provider
