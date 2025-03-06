@@ -104,9 +104,14 @@ function App() {
     setToken(token);
     setIsLoggedIn(true);
 
-    api.getUser().then((response) => {
-      setUser(response);
-    });
+    api
+      .getUser()
+      .then((response) => {
+        setUser(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleLogin = (data) => {
@@ -122,7 +127,6 @@ function App() {
         handleClosePopup();
       })
       .catch((error) => {
-        console.log(error);
         let message;
 
         message =
@@ -157,7 +161,6 @@ function App() {
         handleOpenPopup(registrationSuccessful);
       })
       .catch((error) => {
-        console.log(error);
         const registerPopup = {
           title: "Inscrever-se",
           children: <Register errorMessage={error.message} />,
@@ -187,9 +190,14 @@ function App() {
       news._id = findBookmarkId(news);
       handleRemove(news);
     } else {
-      api.bookmarkArticles(JSON.stringify(news)).then((response) => {
-        setBookmarkedList([...bookmarkedList, response]);
-      });
+      api
+        .bookmarkArticles(JSON.stringify(news))
+        .then((response) => {
+          setBookmarkedList([...bookmarkedList, response]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -205,11 +213,16 @@ function App() {
   };
 
   const handleRemove = (news) => {
-    api.removeArticles(news._id).then(() => {
-      setBookmarkedList((newsList) =>
-        newsList.filter((currentNews) => currentNews._id !== news._id)
-      );
-    });
+    api
+      .removeArticles(news._id)
+      .then(() => {
+        setBookmarkedList((newsList) =>
+          newsList.filter((currentNews) => currentNews._id !== news._id)
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
