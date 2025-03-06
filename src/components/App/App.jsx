@@ -110,8 +110,10 @@ function App() {
   };
 
   const handleLogin = (data) => {
+    const encoded = btoa(JSON.stringify(data));
+
     api
-      .login(data)
+      .login(JSON.stringify({ data: encoded }))
       .then((response) => {
         const token = response.token;
         setAuthenticatedUser(token);
@@ -120,6 +122,7 @@ function App() {
         handleClosePopup();
       })
       .catch((error) => {
+        console.log(error);
         let message;
 
         message =
@@ -141,8 +144,10 @@ function App() {
   };
 
   const handleRegister = (data) => {
+    const encoded = btoa(JSON.stringify(data));
+
     api
-      .register(data)
+      .register(JSON.stringify({ data: encoded }))
       .then(() => {
         const registrationSuccessful = {
           title: "Cadastro concluído com sucesso!",
@@ -152,9 +157,10 @@ function App() {
         handleOpenPopup(registrationSuccessful);
       })
       .catch((error) => {
+        console.log(error);
         const registerPopup = {
           title: "Inscrever-se",
-          children: <Register errorMessage={error} />,
+          children: <Register errorMessage={error.message} />,
         };
         handleOpenPopup(registerPopup);
       });

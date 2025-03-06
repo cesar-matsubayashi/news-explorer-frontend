@@ -33,49 +33,40 @@ class API {
     });
   }
 
-  _setContentType(type) {
-    this._headers["Content-Type"] = type;
-  }
-
   setAuth(jwt) {
     this._headers.Authorization = jwt;
   }
 
   register(data) {
-    this._headers = {};
-    this._setContentType("application/json");
     return this._makeRequest("/signup", "POST", data);
   }
 
   login(data) {
-    this._headers = {};
-    this._setContentType("application/json");
     return this._makeRequest("/signin", "POST", data);
   }
 
   getUser() {
-    this._setContentType("application/json");
     return this._makeRequest("/users/me");
   }
 
   getArticles() {
-    this._setContentType("application/json");
     return this._makeRequest("/articles");
   }
 
   bookmarkArticles(data) {
-    this._setContentType("application/json");
     return this._makeRequest("/articles", "POST", data);
   }
 
   removeArticles(id) {
-    this._setContentType("application/json");
     return this._makeRequest(`/articles/${id}`, "DELETE");
   }
 }
 
 const API_URL = import.meta.env.VITE_MAIN_API_URL;
 
-const api = new API({ baseUrl: API_URL });
+const api = new API({
+  baseUrl: API_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
 export default api;

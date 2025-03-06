@@ -34,7 +34,9 @@ export default function Register({ errorMessage }) {
     const form = e.target;
     const data = new FormData(form);
 
-    handleRegister(data);
+    const obj = Object.fromEntries(data.entries());
+
+    handleRegister(obj);
   };
 
   const openLogin = () => {
