@@ -22,9 +22,13 @@ class API {
         return res.json();
       }
 
-      const message = await res.json();
+      const error = await res.json();
 
-      const errorData = { status: res.status, message: message };
+      const errorData = {
+        status: res.status,
+        message: typeof error === "object" ? error.message : error,
+      };
+
       return Promise.reject(errorData);
     });
   }
@@ -39,11 +43,13 @@ class API {
 
   register(data) {
     this._headers = {};
+    this._setContentType("application/json");
     return this._makeRequest("/signup", "POST", data);
   }
 
   login(data) {
     this._headers = {};
+    this._setContentType("application/json");
     return this._makeRequest("/signin", "POST", data);
   }
 
