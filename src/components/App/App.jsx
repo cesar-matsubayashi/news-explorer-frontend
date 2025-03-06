@@ -6,12 +6,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState, useRef } from "react";
-import {
-  getLocalNews,
-  removeBookmarkedNews,
-  removeLocalNews,
-  setLocalNews,
-} from "../../utils/news";
+import { getLocalNews, removeLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
@@ -53,7 +48,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(bookmarkedList);
+    if (newsList.length > 0) {
+      const bookmarkedUrls = new Set(
+        bookmarkedList.map((bookmark) => bookmark.url)
+      );
+
+      const updatedNewsList = newsList.map((news) => ({
+        ...news,
+        isBookmarked: bookmarkedUrls.has(news.url),
+      }));
+
+      setNewsList(updatedNewsList);
+    }
   }, [bookmarkedList]);
 
   const handleSearch = async (keyword) => {
@@ -162,13 +168,18 @@ function App() {
     setPopup();
   }
 
+  const findBookmarkId = (news) => {
+    return bookmarkedList.find((bookmark) => bookmark.url === news.url)?._id;
+  };
+
   const handleBookmark = (news) => {
     const isBookmarked = bookmarkedList.some(
       (bookmarked) => bookmarked.url === news.url
     );
 
     if (isBookmarked) {
-      removeBookmarkedNews(bookmarkedList, news);
+      news._id = findBookmarkId(news);
+      handleRemove(news);
     } else {
       api.bookmarkArticles(JSON.stringify(news)).then((response) => {
         setBookmarkedList([...bookmarkedList, response]);

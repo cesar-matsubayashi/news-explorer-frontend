@@ -4,10 +4,9 @@ import { UserContext } from "../../contexts/UserContext";
 import bookmark from "../../images/bookmark.svg";
 import bookmarked from "../../images/bookmarked.svg";
 
-export default function NewsCardHeader({ isSaved }) {
+export default function NewsCardHeader({ isBookmarked }) {
   const { isLoggedIn } = useContext(UserContext);
   const [isHovering, setIsHovering] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(isSaved);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -16,11 +15,6 @@ export default function NewsCardHeader({ isSaved }) {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
-
-  const handleBookmark = () => {
-    isLoggedIn && setIsBookmarked((bookmark) => !bookmark);
-  };
-
   return (
     <div className="news-card-header">
       <div
@@ -37,7 +31,6 @@ export default function NewsCardHeader({ isSaved }) {
         className="news-card-header__bookmark"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
-        onClick={handleBookmark}
       >
         <img
           src={isLoggedIn && isBookmarked ? bookmarked : bookmark}

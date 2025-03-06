@@ -20,8 +20,7 @@ export default function Login({ errorMessage }) {
     },
   };
 
-  const { errors, isValid, handleChange, resetForm } =
-    useFormValidation(errorMessages);
+  const { errors, isValid, handleChange } = useFormValidation(errorMessages);
 
   const handleSubmit = (e) => {
     e.preventDefault();

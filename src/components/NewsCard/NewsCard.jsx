@@ -1,5 +1,4 @@
 import "./NewsCard.css";
-
 import fallback from "../../images/fallback.png";
 import { useContext } from "react";
 import { SearchContext } from "../../contexts/SearchContext";
@@ -24,6 +23,7 @@ export default function NewsCard(props) {
     if (e.target.className.includes("bookmark")) {
       const copy = { ...news };
       copy.source = source.name;
+      delete copy.isBookmarked;
       handleBookmark({ ...copy, keyword: getKeyword() });
     }
 
