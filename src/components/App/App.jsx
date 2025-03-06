@@ -228,7 +228,7 @@ function App() {
         }}
       >
         <PopupContext.Provider
-          value={{ handleOpenPopup, handleClosePopup, popup, popupRef }}
+          value={{ handleOpenPopup, handleClosePopup, popupRef }}
         >
           <div className="page">
             {location.pathname === "/" && (
