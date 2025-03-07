@@ -8,19 +8,26 @@ Quando um usuário está logado, ele tem a opção de salvar ou remover notícia
 
 ## Tecnologias Utilizadas
 
-- **React** (com Vite para otimização e desenvolvimento rápido)
-- **NewsAPI** (para obtenção das notícias)
-- **LocalStorage** (para armazenamento temporário das notícias salvas)
+- **React** com **Vite** para otimização e desenvolvimento rápido
+- **NewsAPI** - para obtenção das notícias
+- **API Backend** - para armazenamento e gerenciamento de usuários e notícias salvas
 
 ## Funcionalidades
 
 - Buscar notícias através de uma palavra-chave.
 - Exibir as notícias em forma de cartões.
+- Criar conta e fazer login.
 - Salvar e remover notícias ao fazer login.
 - Visualizar todas as notícias salvas em uma página dedicada.
-- Armazenar temporariamente as notícias salvas no **LocalStorage**.
+- Persistência das notícias salvas no backend.
 
-## Como Rodar o Projeto
+## Domínios
+
+#### Frontend - https://newsexplorer.serverpit.com
+
+#### Backend - https://api.newsexplorer.serverpit.com
+
+## Como Rodar o Projeto localmente
 
 ### 1. Clone o repositório:
 
@@ -40,7 +47,30 @@ Quando um usuário está logado, ele tem a opção de salvar ou remover notícia
   npm install
 ```
 
-### 4. Inicie o servidor de desenvolvimento:
+### 4. Configure as variáveis de ambiente:
+
+Crie um arquivo `.env` na raiz do projeto e adicione as seguintes linhas:
+
+```sh
+VITE_NEWS_API_URL=https://newsapi.org/v2
+VITE_NEWS_API_KEY=SUA_CHAVE_AQUI
+VITE_MAIN_API_URL=https://api.newsexplorer.serverpit.com
+```
+
+Para referência, um arquivo `.env.example` foi incluído no projeto:
+
+```sh
+# Configuração da API de notícias
+VITE_NEWS_API_URL=
+
+# Configuração da  chave API de notícias
+VITE_NEWS_API_KEY=
+
+# Configuração da API backend
+VITE_MAIN_API_URL=
+```
+
+### 5. Inicie o servidor de desenvolvimento:
 
 ```sh
   npm run dev
@@ -48,22 +78,9 @@ Quando um usuário está logado, ele tem a opção de salvar ou remover notícia
 
 O projeto será iniciado e estará disponível no navegador no endereço indicado pelo Vite.
 
-## Configuração da API
+## Configuração da API Backend
 
-Para que a busca de notícias funcione corretamente, é necessário configurar a **NewsAPI**:
-
-1. Crie uma conta em [NewsAPI](https://newsapi.org/).
-2. Gere uma chave de API.
-3. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes linhas:
-   ```sh
-   VITE_NEWS_API_URL=https://newsapi.org/v2
-   VITE_NEWS_API_KEY=SUA_CHAVE_AQUI
-   ```
-
-## Melhorias Futuras
-
-- Implementação de um backend para armazenar as notícias de forma persistente.
-- Autenticação de usuário integrada com um banco de dados.
+Para que as notícias salvas sejam armazenadas corretamente, é necessário configurar a API backend. Certifique-se de que o backend está rodando e configurado corretamente para aceitar requisições da aplicação frontend.
 
 ## Autor
 
