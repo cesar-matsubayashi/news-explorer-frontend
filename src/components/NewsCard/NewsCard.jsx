@@ -1,5 +1,4 @@
 import "./NewsCard.css";
-
 import fallback from "../../images/fallback.png";
 import { useContext } from "react";
 import { SearchContext } from "../../contexts/SearchContext";
@@ -8,7 +7,7 @@ import { getKeyword } from "../../utils/news";
 export default function NewsCard(props) {
   const { news, children } = props;
   const { urlToImage, publishedAt, title, description, source, url } = news;
-  const { handleBookmark } = useContext(SearchContext);
+  const { handleBookmark, handleRemove } = useContext(SearchContext);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -22,7 +21,14 @@ export default function NewsCard(props) {
 
   const handleSave = (e) => {
     if (e.target.className.includes("bookmark")) {
-      handleBookmark({ ...news, keyword: getKeyword() });
+      const copy = { ...news };
+      copy.source = source.name;
+      delete copy.isBookmarked;
+      handleBookmark({ ...copy, keyword: getKeyword() });
+    }
+
+    if (e.target.className.includes("remove")) {
+      handleRemove(news);
     }
   };
 
@@ -45,7 +51,9 @@ export default function NewsCard(props) {
           <p className="news-card__published">{formatDate(publishedAt)}</p>
           <h1 className="news-card__title">{title}</h1>
           <p className="news-card__description">{description}</p>
-          <p className="news-card__source">{source.name}</p>
+          <p className="news-card__source">
+            {source.name ? source.name : source}
+          </p>
         </div>
       </a>
     </div>

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import useFormValidation from "../../utils/useFormValidation";
 import Register from "../Register/Register";
 
-export default function Login() {
+export default function Login({ errorMessage }) {
   const { handleLogin } = useContext(UserContext);
   const { handleOpenPopup, handleClosePopup } = useContext(PopupContext);
 
@@ -20,8 +20,7 @@ export default function Login() {
     },
   };
 
-  const { errors, isValid, handleChange, resetForm } =
-    useFormValidation(errorMessages);
+  const { errors, isValid, handleChange } = useFormValidation(errorMessages);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,14 +28,9 @@ export default function Login() {
     const form = e.target;
     const data = new FormData(form);
 
-    let values = "";
-    for (const [key, value] of data) {
-      values += `${key}: ${value}\n`;
-    }
+    const obj = Object.fromEntries(data.entries());
 
-    resetForm();
-    handleLogin(data);
-    handleClosePopup();
+    handleLogin(obj);
   };
 
   const openRegister = () => {
@@ -87,6 +81,12 @@ export default function Login() {
             </span>
           )}
         </fieldset>
+
+        {errorMessage && (
+          <span className="login-input-error form__input-error">
+            {errorMessage.message}
+          </span>
+        )}
 
         <button
           type="submit"

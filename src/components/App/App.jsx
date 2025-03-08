@@ -6,21 +6,17 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import newsApi from "../../utils/newsApi";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useEffect, useState, useRef } from "react";
-import {
-  getBookmarkedNews,
-  getLocalNews,
-  removeBookmarkedNews,
-  removeLocalNews,
-  setBookmarkedNews,
-  setLocalNews,
-} from "../../utils/news";
+import { getLocalNews, removeLocalNews, setLocalNews } from "../../utils/news";
 import { UserContext } from "../../contexts/UserContext";
 import background from "../../images/background.png";
 import { Route, Routes, useLocation } from "react-router";
 import { PopupContext } from "../../contexts/PopupContext";
 import { getToken, removeToken, setToken } from "../../utils/token";
+import Register from "../Register/Register";
 import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 import Popup from "../Popup/Popup";
+import api from "../../utils/mainApi";
+import Login from "../Login/Login";
 
 function App() {
   const location = useLocation();
@@ -30,20 +26,16 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popup, setPopup] = useState(null);
+  const [user, setUser] = useState({});
   const popupRef = useRef();
-
-  const user = { name: "Cesar", email: "cesar@email.com" };
 
   useEffect(() => {
     const jwt = getToken();
     setIsLoggedIn(jwt);
 
     if (jwt) {
-      const bookmark = JSON.parse(getBookmarkedNews());
-
-      if (bookmark) {
-        setBookmarkedList(bookmark);
-      }
+      setAuthenticatedUser(jwt);
+      getBookmarked();
     }
 
     const localNews = JSON.parse(getLocalNews());
@@ -54,6 +46,21 @@ function App() {
 
     setNewsList(localNews);
   }, []);
+
+  useEffect(() => {
+    if (newsList.length > 0) {
+      const bookmarkedUrls = new Set(
+        bookmarkedList.map((bookmark) => bookmark.url)
+      );
+
+      const updatedNewsList = newsList.map((news) => ({
+        ...news,
+        isBookmarked: bookmarkedUrls.has(news.url),
+      }));
+
+      setNewsList(updatedNewsList);
+    }
+  }, [bookmarkedList]);
 
   const handleSearch = async (keyword) => {
     setIsLoading(true);
@@ -92,14 +99,47 @@ function App() {
     }
   };
 
-  const handleLogin = () => {
-    setToken("pseudo-user-token");
+  const setAuthenticatedUser = (token) => {
+    api.setAuth(token);
+    setToken(token);
     setIsLoggedIn(true);
-    const bookmark = JSON.parse(getBookmarkedNews());
 
-    if (bookmark) {
-      setBookmarkedList(bookmark);
-    }
+    api
+      .getUser()
+      .then((response) => {
+        setUser(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleLogin = (data) => {
+    const encoded = btoa(JSON.stringify(data));
+
+    api
+      .login(JSON.stringify({ data: encoded }))
+      .then((response) => {
+        const token = response.token;
+        setAuthenticatedUser(token);
+
+        getBookmarked();
+        handleClosePopup();
+      })
+      .catch((error) => {
+        let message;
+
+        message =
+          error.message === "Failed to fetch"
+            ? { message: "Houve um erro inesperado" }
+            : error;
+
+        const loginPopup = {
+          title: "Entrar",
+          children: <Login errorMessage={message} />,
+        };
+        handleOpenPopup(loginPopup);
+      });
   };
 
   const handleLogout = () => {
@@ -107,13 +147,26 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  const handleRegister = () => {
-    const registrationSuccessful = {
-      title: "Cadastro concluído com sucesso!",
-      children: <RegisterSuccessful />,
-    };
+  const handleRegister = (data) => {
+    const encoded = btoa(JSON.stringify(data));
 
-    handleOpenPopup(registrationSuccessful);
+    api
+      .register(JSON.stringify({ data: encoded }))
+      .then(() => {
+        const registrationSuccessful = {
+          title: "Cadastro concluído com sucesso!",
+          children: <RegisterSuccessful />,
+        };
+
+        handleOpenPopup(registrationSuccessful);
+      })
+      .catch((error) => {
+        const registerPopup = {
+          title: "Inscrever-se",
+          children: <Register errorMessage={error.message} />,
+        };
+        handleOpenPopup(registerPopup);
+      });
   };
 
   function handleOpenPopup(popup) {
@@ -124,16 +177,52 @@ function App() {
     setPopup();
   }
 
+  const findBookmarkId = (news) => {
+    return bookmarkedList.find((bookmark) => bookmark.url === news.url)?._id;
+  };
+
   const handleBookmark = (news) => {
     const isBookmarked = bookmarkedList.some(
       (bookmarked) => bookmarked.url === news.url
     );
 
     if (isBookmarked) {
-      removeBookmarkedNews(bookmarkedList, news);
+      news._id = findBookmarkId(news);
+      handleRemove(news);
     } else {
-      setBookmarkedNews(bookmarkedList, news);
+      api
+        .bookmarkArticles(JSON.stringify(news))
+        .then((response) => {
+          setBookmarkedList([...bookmarkedList, response]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+  };
+
+  const getBookmarked = () => {
+    api
+      .getArticles()
+      .then((response) => {
+        setBookmarkedList(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleRemove = (news) => {
+    api
+      .removeArticles(news._id)
+      .then(() => {
+        setBookmarkedList((newsList) =>
+          newsList.filter((currentNews) => currentNews._id !== news._id)
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -145,13 +234,20 @@ function App() {
         error,
         handleBookmark,
         bookmarkedList,
+        handleRemove,
       }}
     >
       <UserContext.Provider
-        value={{ isLoggedIn, user, handleLogin, handleLogout, handleRegister }}
+        value={{
+          isLoggedIn,
+          handleLogin,
+          handleLogout,
+          handleRegister,
+          user,
+        }}
       >
         <PopupContext.Provider
-          value={{ handleOpenPopup, handleClosePopup, popup, popupRef }}
+          value={{ handleOpenPopup, handleClosePopup, popupRef }}
         >
           <div className="page">
             {location.pathname === "/" && (

@@ -6,7 +6,7 @@ import "../Styles/Form.css";
 import "./Register.css";
 import { useContext } from "react";
 
-export default function Register() {
+export default function Register({ errorMessage }) {
   const { handleRegister } = useContext(UserContext);
   const { handleOpenPopup, handleClosePopup } = useContext(PopupContext);
 
@@ -26,8 +26,7 @@ export default function Register() {
     },
   };
 
-  const { errors, isValid, handleChange, resetForm } =
-    useFormValidation(errorMessages);
+  const { errors, isValid, handleChange } = useFormValidation(errorMessages);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,14 +34,9 @@ export default function Register() {
     const form = e.target;
     const data = new FormData(form);
 
-    let values = "";
-    for (const [key, value] of data) {
-      values += `${key}: ${value}\n`;
-    }
+    const obj = Object.fromEntries(data.entries());
 
-    resetForm();
-    handleClosePopup();
-    handleRegister(data);
+    handleRegister(obj);
   };
 
   const openLogin = () => {
@@ -121,9 +115,11 @@ export default function Register() {
           )}
         </fieldset>
 
-        <span className="register-input-error form__input-error">
-          Este e-mail não está disponível
-        </span>
+        {errorMessage && (
+          <span className="register-input-error form__input-error">
+            {errorMessage.message}
+          </span>
+        )}
 
         <button
           type="submit"
