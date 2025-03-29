@@ -17,6 +17,7 @@ import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 import Popup from "../Popup/Popup";
 import api from "../../utils/mainApi";
 import Login from "../Login/Login";
+import i18n from "../../utils/i18n";
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,10 @@ function App() {
   const [popup, setPopup] = useState(null);
   const [user, setUser] = useState({});
   const popupRef = useRef();
+
+  useEffect(() => {
+    i18n.changeLanguage(navigator.language);
+  }, []);
 
   useEffect(() => {
     const jwt = getToken();
