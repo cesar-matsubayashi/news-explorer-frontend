@@ -46,6 +46,21 @@ i18n.use(initReactI18next).init({
           copyright: "2025 News Explorer, developed by Cesar Matsubayashi",
           homeButton: "Home",
         },
+        savedNewsHeader: {
+          title: "Saved articles",
+          keyword: {
+            by: "By keywords: ",
+            join: " and ",
+            other: "{keywords} and {count} others",
+          },
+          quantity: {
+            singular: "{name}, you have {count} article saved",
+            plural: "{name}, you have {count} articles saved",
+          },
+        },
+        savedNewsCardHeader: {
+          message: "Remove from saved",
+        },
       },
     },
     pt: {
@@ -89,6 +104,21 @@ i18n.use(initReactI18next).init({
         footer: {
           copyright: "2025 News Explorer, desenvolvido por Cesar Matsubayashi",
           homeButton: "Início",
+        },
+        savedNewsHeader: {
+          title: "Artigos salvos",
+          keyword: {
+            by: "Por palavras-chave: ",
+            join: " e ",
+            other: "{keywords} e {count} outras",
+          },
+          quantity: {
+            singular: "{name}, você tem {count} artigo salvo",
+            plural: "{name}, você tem {count} artigos salvos",
+          },
+        },
+        savedNewsCardHeader: {
+          message: "Remover de salvos",
         },
       },
     },

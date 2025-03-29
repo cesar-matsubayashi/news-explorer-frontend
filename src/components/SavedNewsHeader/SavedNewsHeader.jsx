@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import { useContext } from "react";
 import "./SavedNewsHeader.css";
 import { UserContext } from "../../contexts/UserContext";
 import { SearchContext } from "../../contexts/SearchContext";
 
 export default function SavedNewsHeader() {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const { bookmarkedList } = useContext(SearchContext);
 
@@ -21,16 +24,28 @@ export default function SavedNewsHeader() {
 
     if (count === 0) return "";
     if (count === 1) return keywords[0];
-    if (count === 2) return keywords.join(" e ");
+    if (count === 2) return keywords.join(t("savedNewsHeader.keyword.join"));
     if (count === 3)
-      return keywords.slice(0, 2).join(", ") + " e " + keywords[2];
+      return (
+        keywords.slice(0, 2).join(", ") +
+        t("savedNewsHeader.keyword.join") +
+        keywords[2]
+      );
 
-    return `${keywords.slice(0, 2).join(", ")} e ${count - 2} outra${
-      count - 2 > 1 ? "s" : ""
-    }`;
+    return t("savedNewsHeader.keyword.other")
+      .replace("{keywords}", keywords.slice(0, 2).join(", "))
+      .replace("{count}", count - 2);
   };
 
   const count = bookmarkedList.length;
+
+  const quantityMessage =
+    count > 1
+      ? t("savedNewsHeader.quantity.plural")
+      : t("savedNewsHeader.quantity.singular");
+  const replacedMessage = quantityMessage
+    .replace("{name}", user.name)
+    .replace("{count}", count);
 
   const keywords = getOrderKeywords(
     bookmarkedList.map((news) => {
@@ -40,14 +55,10 @@ export default function SavedNewsHeader() {
 
   return (
     <div className="saved-news-header">
-      <p className="saved-news-header__text">Artigos salvos</p>
-      <h1 className="saved-news-header__quantity">
-        {`${user.name}, você tem ${count} artigo${count > 1 ? "s" : ""} salvo${
-          count > 1 ? "s" : ""
-        }`}
-      </h1>
+      <p className="saved-news-header__text">{t("savedNewsHeader.title")}</p>
+      <h1 className="saved-news-header__quantity">{replacedMessage}</h1>
       <p className="saved-news-header__keywords">
-        Por palavras-chave: {formatKeywords(keywords)}
+        {t("savedNewsHeader.keyword.by")} {formatKeywords(keywords)}
       </p>
     </div>
   );
