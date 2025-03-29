@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./../Styles/Form.css";
 import "./SearchForm.css";
 import { SearchContext } from "../../contexts/SearchContext";
@@ -5,6 +7,7 @@ import { useContext, useState } from "react";
 import { getKeyword } from "../../utils/news";
 
 export default function SearchForm() {
+  const { t } = useTranslation();
   const { handleSearch } = useContext(SearchContext);
   const [inputValue, setInputValue] = useState(getKeyword());
 
@@ -26,17 +29,17 @@ export default function SearchForm() {
         name="keyword"
         id="keyword-input"
         className="form__input form__input_el_keyword"
-        placeholder="Inserir tema"
+        placeholder={t("searchFrom.placeholder")}
         required
         onInvalid={(e) =>
-          e.target.setCustomValidity("Por favor, insira uma palavra-chave")
+          e.target.setCustomValidity(t("searchFrom.invalidInput"))
         }
         onInput={(e) => e.target.setCustomValidity("")}
         value={inputValue}
         onChange={handleChange}
       />
       <button type="submit" name="submit" className="form__button">
-        Procurar
+        {t("searchFrom.submit")}
       </button>
     </form>
   );

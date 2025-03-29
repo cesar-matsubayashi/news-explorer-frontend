@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./NewsCard.css";
 import fallback from "../../images/fallback.png";
 import { useContext } from "react";
@@ -5,13 +7,14 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { getKeyword } from "../../utils/news";
 
 export default function NewsCard(props) {
+  const { t } = useTranslation();
   const { news, children } = props;
   const { urlToImage, publishedAt, title, description, source, url } = news;
   const { handleBookmark, handleRemove } = useContext(SearchContext);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
-    const formatter = new Intl.DateTimeFormat("pt-BR", {
+    const formatter = new Intl.DateTimeFormat(t("newsCard.dateFormat"), {
       day: "2-digit",
       month: "long",
       year: "numeric",

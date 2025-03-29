@@ -1,19 +1,21 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./Footer.css";
 import github from "../../images/github.svg";
 import linkedin from "../../images/linkedin.svg";
 import { Link } from "react-router";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
-      <p className="footer__copyright">
-        &copy; 2025 News Explorer, desenvolvido por Cesar Matsubayashi
-      </p>
+      <p className="footer__copyright">&copy; {t("footer.copyright")}</p>
       <div className="footer__container">
         <ul className="footer__links">
           <li>
             <Link className="footer__home" to="/">
-              Início
+              {t("footer.homeButton")}
             </Link>
           </li>
           <li className="footer__author">Cesar Matsubayashi</li>

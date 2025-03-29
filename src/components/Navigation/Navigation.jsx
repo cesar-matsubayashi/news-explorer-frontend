@@ -10,7 +10,7 @@ import "../../utils/i18n";
 import { useTranslation } from "react-i18next";
 
 export default function Navigation({ isMobile }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { isLoggedIn, user, handleLogout } = useContext(UserContext);
   const { handleOpenPopup } = useContext(PopupContext);
 
