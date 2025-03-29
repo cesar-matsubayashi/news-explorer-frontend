@@ -7,6 +7,7 @@ i18n.use(initReactI18next).init({
     en: {
       translation: {
         navigation: {
+          login: "Sign in",
           homeButton: "Home",
           savedButton: "Saved Articles",
           signinButton: "Sign in",
@@ -61,11 +62,83 @@ i18n.use(initReactI18next).init({
         savedNewsCardHeader: {
           message: "Remove from saved",
         },
+        login: {
+          error: {
+            email: {
+              valueMissing: "E-mail is required",
+              typeMismatch: "Invalid e-mail",
+            },
+            password: {
+              valueMissing: "Password is required",
+            },
+          },
+          registerTitle: "Sign up",
+          email: {
+            label: "E-mail",
+            placeholder: "Insert e-mail",
+          },
+          password: {
+            label: "Password",
+            placeholder: "Insert password",
+          },
+          submit: "Sign in",
+          or: "or",
+        },
+        register: {
+          error: {
+            email: {
+              valueMissing: "E-mail is required",
+              typeMismatch: "Invalid e-mail",
+            },
+            password: {
+              valueMissing: "Password is required",
+              tooShort: "Password must have at least 8 characters",
+            },
+            name: {
+              valueMissing: "Name is required",
+              tooShort: "Name must be at least 2 characters long",
+              tooLong: "Name must be at most 40 characters long",
+            },
+          },
+          signinTitle: "Sign in",
+          email: {
+            label: "E-mail",
+            placeholder: "Insert e-mail",
+          },
+          password: {
+            label: "Password",
+            placeholder: "Insert password",
+          },
+          username: {
+            label: "Username",
+            placeholder: "Insert your username",
+          },
+          submit: "Sign up",
+          or: "or",
+        },
+        app: {
+          login: "Sign in",
+          register: "Sign up",
+          registrationSuccessful: "Registration completed successfully!",
+          api: {
+            nothingMatches: {
+              title: "Nothing found",
+              message: "Sorry, but nothing matches your search terms.",
+            },
+            serverError: {
+              title: "Something went wrong",
+              message:
+                "Sorry, there may be a connection problem or the server may be down. Please try again later.",
+            },
+            fetchError: "There was an unexpected error",
+          },
+        },
       },
     },
     pt: {
       translation: {
         navigation: {
+          login: "Entrar",
           homeButton: "Início",
           savedButton: "Artigos Salvos",
           signinButton: "Entrar",
@@ -119,6 +192,79 @@ i18n.use(initReactI18next).init({
         },
         savedNewsCardHeader: {
           message: "Remover de salvos",
+        },
+        login: {
+          error: {
+            email: {
+              valueMissing: "E-mail é necessário",
+              typeMismatch: "E-mail inválido",
+            },
+            password: {
+              valueMissing: "Senha é necessária",
+            },
+          },
+          registerTitle: "Inscrever-se",
+          email: {
+            label: "E-mail",
+            placeholder: "Insira e-mail",
+          },
+          password: {
+            label: "Senha",
+            placeholder: "Insira senha",
+          },
+          submit: "Entrar",
+          or: "ou",
+        },
+        register: {
+          error: {
+            email: {
+              valueMissing: "E-mail é necessário",
+              typeMismatch: "E-mail inválido",
+            },
+            password: {
+              valueMissing: "Senha é necessária",
+              tooShort: "Senha deve ter no mínimo 8 caracteres",
+            },
+            name: {
+              valueMissing: "Nome é necessário",
+              tooShort: "Nome deve ter no mínimo 2 caracteres",
+              tooLong: "Nome deve ter no máximo 30 caracteres",
+            },
+          },
+          signinTitle: "Entrar",
+          email: {
+            label: "E-mail",
+            placeholder: "Insira e-mail",
+          },
+          password: {
+            label: "Senha",
+            placeholder: "Insira senha",
+          },
+          username: {
+            label: "Nome de usuário",
+            placeholder: "Insira seu nome de usuário",
+          },
+          submit: "Inscrever-se",
+          or: "ou",
+          signinLink: "Entre",
+        },
+        app: {
+          login: "Entrar",
+          register: "Inscrever-se",
+          registrationSuccessful: "Cadastro concluído com sucesso!",
+          api: {
+            nothingMatches: {
+              title: "Nada encontrado",
+              message:
+                "Desculpe, mas nada corresponde aos seus termos de pesquisa",
+            },
+            serverError: {
+              title: "Algo deu errado",
+              message:
+                "Desculpe, pode haver um problema de conexão ou o servidor pode estar inativo. Por favor, tente novamente mais tarde.",
+            },
+            fetchError: "Houve um erro inesperado",
+          },
         },
       },
     },

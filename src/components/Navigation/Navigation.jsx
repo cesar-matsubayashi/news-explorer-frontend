@@ -16,7 +16,7 @@ export default function Navigation({ isMobile }) {
 
   const location = useLocation();
 
-  const loginPopup = { title: "Entrar", children: <Login /> };
+  const loginPopup = { title: t("navigation.login"), children: <Login /> };
 
   const getClass = (baseClass) => {
     return location.pathname === "/saved-news"
