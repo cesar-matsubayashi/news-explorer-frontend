@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./SavedNewsCardHeader.css";
 import { useState } from "react";
 import trash from "../../images/trash.svg";
 
 export default function NewsCardHeader(props) {
+  const { t } = useTranslation();
   const { keyword } = props;
   const [isHovering, setIsHovering] = useState(false);
 
@@ -24,7 +27,7 @@ export default function NewsCardHeader(props) {
             : "saved-news-card-header__message_inactive"
         }`}
       >
-        Remover de salvos
+        {t("savedNewsCardHeader.message")}
       </div>
 
       <div

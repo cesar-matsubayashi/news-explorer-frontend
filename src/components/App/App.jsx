@@ -17,8 +17,11 @@ import RegisterSuccessful from "../RegisterSuccessful/RegisterSuccessful";
 import Popup from "../Popup/Popup";
 import api from "../../utils/mainApi";
 import Login from "../Login/Login";
+import i18n from "../../utils/i18n";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   const location = useLocation();
   const [newsList, setNewsList] = useState([]);
   const [bookmarkedList, setBookmarkedList] = useState([]);
@@ -28,6 +31,10 @@ function App() {
   const [popup, setPopup] = useState(null);
   const [user, setUser] = useState({});
   const popupRef = useRef();
+
+  useEffect(() => {
+    i18n.changeLanguage(navigator.language);
+  }, []);
 
   useEffect(() => {
     const jwt = getToken();
@@ -70,10 +77,8 @@ function App() {
         .getNews(keyword)
         .then((response) => {
           if (response.totalResults === 0) {
-            const error = new Error(
-              "Desculpe, mas nada corresponde aos seus termos de pesquisa"
-            );
-            error.title = "Nada encontrado";
+            const error = new Error(t("app.api.nothingMatches.message"));
+            error.title = t("app.api.nothingMatches.title");
             error.name = "DocumentNotFound";
             throw error;
           }
@@ -83,9 +88,8 @@ function App() {
         })
         .catch((err) => {
           if (err.name != "DocumentNotFound") {
-            err.message =
-              "Desculpe, pode haver um problema de conexão ou o servidor pode estar inativo. Por favor, tente novamente mais tarde.";
-            err.title = "Algo deu errado";
+            err.message = t("app.api.serverError.message");
+            err.title = t("app.api.serverError.title");
           }
           removeLocalNews();
           setError(err);
@@ -131,11 +135,11 @@ function App() {
 
         message =
           error.message === "Failed to fetch"
-            ? { message: "Houve um erro inesperado" }
+            ? { message: t("app.api.fetchError") }
             : error;
 
         const loginPopup = {
-          title: "Entrar",
+          title: t("app.login"),
           children: <Login errorMessage={message} />,
         };
         handleOpenPopup(loginPopup);
@@ -154,7 +158,7 @@ function App() {
       .register(JSON.stringify({ data: encoded }))
       .then(() => {
         const registrationSuccessful = {
-          title: "Cadastro concluído com sucesso!",
+          title: t("app.registrationSuccessful"),
           children: <RegisterSuccessful />,
         };
 
@@ -162,7 +166,7 @@ function App() {
       })
       .catch((error) => {
         const registerPopup = {
-          title: "Inscrever-se",
+          title: t("app.register"),
           children: <Register errorMessage={error.message} />,
         };
         handleOpenPopup(registerPopup);

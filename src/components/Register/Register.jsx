@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import { PopupContext } from "../../contexts/PopupContext";
 import { UserContext } from "../../contexts/UserContext";
 import useFormValidation from "../../utils/useFormValidation";
@@ -7,22 +9,23 @@ import "./Register.css";
 import { useContext } from "react";
 
 export default function Register({ errorMessage }) {
+  const { t } = useTranslation();
   const { handleRegister } = useContext(UserContext);
   const { handleOpenPopup, handleClosePopup } = useContext(PopupContext);
 
   const errorMessages = {
     email: {
-      valueMissing: "E-mail é necessário",
-      typeMismatch: "E-mail inválido",
+      valueMissing: t("register.error.email.valueMissing"),
+      typeMismatch: t("register.error.email.typeMismatch"),
     },
     password: {
-      valueMissing: "Senha é necessária",
-      tooShort: "Senha deve ter no mínimo 8 caracteres",
+      valueMissing: t("register.error.password.valueMissing"),
+      tooShort: t("register.error.password.tooShort"),
     },
     name: {
-      valueMissing: "Nome é necessário",
-      tooShort: "Nome deve ter no mínimo 2 caracteres",
-      tooLong: "Nome deve ter no máximo 30 caracteres",
+      valueMissing: t("register.error.name.valueMissing"),
+      tooShort: t("register.error.name.tooShort"),
+      tooLong: t("register.error.name.tooLong"),
     },
   };
 
@@ -41,7 +44,10 @@ export default function Register({ errorMessage }) {
 
   const openLogin = () => {
     handleClosePopup();
-    const loginPopup = { title: "Entrar", children: <Login /> };
+    const loginPopup = {
+      title: t("register.signinTitle"),
+      children: <Login />,
+    };
     handleOpenPopup(loginPopup);
   };
 
@@ -54,14 +60,14 @@ export default function Register({ errorMessage }) {
       >
         <fieldset className="form__fieldset form__fieldset_el_email">
           <label htmlFor="email-input" className="form__label">
-            E-mail
+            {t("register.email.label")}
           </label>
           <input
             type="email"
             name="email"
             id="email-input"
             className="form__input form__input_popup form__input_el_email"
-            placeholder="Insira e-mail"
+            placeholder={t("register.email.placeholder")}
             required
             onChange={handleChange}
           />
@@ -74,14 +80,14 @@ export default function Register({ errorMessage }) {
 
         <fieldset className="form__fieldset form__fieldset_el_password">
           <label htmlFor="password-input" className="form__label">
-            Senha
+            {t("register.password.label")}
           </label>
           <input
             type="password"
             name="password"
             id="password-input"
             className="form__input form__input_popup form__input_el_password"
-            placeholder="Insira senha"
+            placeholder={t("register.password.placeholder")}
             required
             minLength={8}
             onChange={handleChange}
@@ -95,14 +101,14 @@ export default function Register({ errorMessage }) {
 
         <fieldset className="form__fieldset form__fieldset_el_name">
           <label htmlFor="name-input" className="form__label">
-            Nome de usuário
+            {t("register.username.label")}
           </label>
           <input
             type="name"
             name="name"
             id="name-input"
             className="form__input form__input_popup form__input_el_name"
-            placeholder="Insira seu nome de usuário"
+            placeholder={t("register.username.placeholder")}
             required
             minLength={2}
             maxLength={30}
@@ -129,14 +135,14 @@ export default function Register({ errorMessage }) {
           }`}
           disabled={!isValid}
         >
-          Inscrever-se
+          {t("register.submit")}
         </button>
       </form>
 
       <div className="login">
-        ou
+        {t("register.or")}
         <p className="login__message" onClick={openLogin}>
-          Entre
+          {t("register.signinTitle")}
         </p>
       </div>
     </>

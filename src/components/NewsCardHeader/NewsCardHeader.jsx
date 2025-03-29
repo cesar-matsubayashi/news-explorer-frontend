@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./NewsCardHeader.css";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
@@ -5,6 +7,7 @@ import bookmark from "../../images/bookmark.svg";
 import bookmarked from "../../images/bookmarked.svg";
 
 export default function NewsCardHeader({ isBookmarked }) {
+  const { t } = useTranslation();
   const { isLoggedIn } = useContext(UserContext);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -24,7 +27,7 @@ export default function NewsCardHeader({ isBookmarked }) {
             : "news-card-header__signin_inactive"
         }`}
       >
-        Faça o login para salvar os artigos
+        {t("newsCardHeader.signin")}
       </div>
 
       <div

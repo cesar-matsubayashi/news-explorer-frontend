@@ -11,8 +11,10 @@
     "deploy": "npm run build && scp -r ./dist/* cesar_matsubayashi@newsexplorer.serverpit.com:/home/cesar_matsubayashi/news-explorer-frontend"
   },
   "dependencies": {
+    "i18next": "^24.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1",
     "react-router-dom": "^7.1.5"
   },
   "devDependencies": {

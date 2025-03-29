@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import { PopupContext } from "../../contexts/PopupContext";
 import { UserContext } from "../../contexts/UserContext";
 import "../Styles/Form.css";
@@ -7,16 +9,17 @@ import useFormValidation from "../../utils/useFormValidation";
 import Register from "../Register/Register";
 
 export default function Login({ errorMessage }) {
+  const { t } = useTranslation();
   const { handleLogin } = useContext(UserContext);
   const { handleOpenPopup, handleClosePopup } = useContext(PopupContext);
 
   const errorMessages = {
     email: {
-      valueMissing: "E-mail é necessário",
-      typeMismatch: "E-mail inválido",
+      valueMissing: t("login.error.email.valueMissing"),
+      typeMismatch: t("login.error.email.typeMismatch"),
     },
     password: {
-      valueMissing: "Senha é necessária",
+      valueMissing: t("login.error.password.valueMissing"),
     },
   };
 
@@ -35,7 +38,10 @@ export default function Login({ errorMessage }) {
 
   const openRegister = () => {
     handleClosePopup();
-    const registerPopup = { title: "Inscrever-se", children: <Register /> };
+    const registerPopup = {
+      title: t("login.registerTitle"),
+      children: <Register />,
+    };
     handleOpenPopup(registerPopup);
   };
 
@@ -44,14 +50,14 @@ export default function Login({ errorMessage }) {
       <form className="form form_login" name="login" onSubmit={handleSubmit}>
         <fieldset className="form__fieldset form__fieldset_el_email">
           <label htmlFor="email-input" className="form__label">
-            E-mail
+            {t("login.email.label")}
           </label>
           <input
             type="email"
             name="email"
             id="email-input"
             className="form__input form__input_popup form__input_el_email"
-            placeholder="Insira e-mail"
+            placeholder={t("login.email.placeholder")}
             required
             onChange={handleChange}
           />
@@ -64,14 +70,14 @@ export default function Login({ errorMessage }) {
 
         <fieldset className="form__fieldset form__fieldset_el_password">
           <label htmlFor="password-input" className="form__label">
-            Senha
+            {t("login.password.label")}
           </label>
           <input
             type="password"
             name="password"
             id="password-input"
             className="form__input form__input_popup form__input_el_password"
-            placeholder="Insira senha"
+            placeholder={t("login.password.placeholder")}
             required
             onChange={handleChange}
           />
@@ -96,14 +102,14 @@ export default function Login({ errorMessage }) {
           }`}
           disabled={!isValid}
         >
-          Entrar
+          {t("login.submit")}
         </button>
       </form>
 
       <div className="register">
-        ou
+        {t("login.or")}
         <p className="register__message" onClick={openRegister}>
-          Inscreva-se
+          {t("login.registerTitle")}
         </p>
       </div>
     </>

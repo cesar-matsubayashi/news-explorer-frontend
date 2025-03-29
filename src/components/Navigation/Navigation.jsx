@@ -6,14 +6,17 @@ import logoutBlack from "../../images/logout-black.svg";
 import { UserContext } from "../../contexts/UserContext";
 import { PopupContext } from "../../contexts/PopupContext";
 import Login from "../Login/Login";
+import "../../utils/i18n";
+import { useTranslation } from "react-i18next";
 
 export default function Navigation({ isMobile }) {
+  const { t } = useTranslation();
   const { isLoggedIn, user, handleLogout } = useContext(UserContext);
   const { handleOpenPopup } = useContext(PopupContext);
 
   const location = useLocation();
 
-  const loginPopup = { title: "Entrar", children: <Login /> };
+  const loginPopup = { title: t("navigation.login"), children: <Login /> };
 
   const getClass = (baseClass) => {
     return location.pathname === "/saved-news"
@@ -54,13 +57,13 @@ export default function Navigation({ isMobile }) {
     <ul className="navigation">
       <li>
         <NavLink className={checkHomeActive} to="/" end>
-          Início
+          {t("navigation.homeButton")}
         </NavLink>
       </li>
       {isLoggedIn && (
         <li>
           <NavLink className={checkSavedNewsActive} to="/saved-news">
-            Artigos salvos
+            {t("navigation.savedButton")}
           </NavLink>
         </li>
       )}
@@ -82,7 +85,7 @@ export default function Navigation({ isMobile }) {
             className="navigation__button navigation__button_signin"
             onClick={handleClick}
           >
-            Entrar
+            {t("navigation.signinButton")}
           </button>
         )}
       </li>

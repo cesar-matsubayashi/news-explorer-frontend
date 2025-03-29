@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import "../../utils/i18n";
 import "./NewsCardList.css";
 import NewsCard from "../NewsCard/NewsCard";
 import NewsCardHeader from "../NewsCardHeader/NewsCardHeader";
@@ -5,6 +7,7 @@ import { SearchContext } from "../../contexts/SearchContext";
 import { useContext, useState } from "react";
 
 export default function NewsCardList() {
+  const { t } = useTranslation();
   const { newsList } = useContext(SearchContext);
   const [visibleNews, setVisibleNews] = useState(3);
 
@@ -14,7 +17,7 @@ export default function NewsCardList() {
 
   return (
     <div className="news-list">
-      <h2 className="news-list__title">Procurar resultados</h2>
+      <h2 className="news-list__title">{t("newsCardList.title")}</h2>
 
       <div className="news-list__content">
         {newsList.slice(0, visibleNews).map((news) => (
@@ -26,7 +29,7 @@ export default function NewsCardList() {
 
       {visibleNews < newsList.length && (
         <button className="news-list__button" onClick={handleClick}>
-          Mostrar mais
+          {t("newsCardList.button")}
         </button>
       )}
     </div>
