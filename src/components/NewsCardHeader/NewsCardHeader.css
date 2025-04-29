@@ -38,6 +38,7 @@
   align-items: center;
   border-radius: 8px;
   margin: 24px 24px 0 5px;
+  cursor: pointer;
 }
 
 .news-card-header__bookmark-icon_disable {
