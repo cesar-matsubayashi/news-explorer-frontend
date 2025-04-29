@@ -25,12 +25,6 @@ When a user is logged in, they have the option to save or remove news articles. 
 
 - The application supports English and Portuguese based on the browser's language settings.
 
-## Domains
-
-#### Frontend - https://newsexplorer.serverpit.com
-
-#### Backend - https://api.newsexplorer.serverpit.com
-
 ## How to Run the Project Locally
 
 ### 1. Clone the repository:
